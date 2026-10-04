@@ -4,14 +4,14 @@
 
 USER MANUAL · VCV RACK · v2.0.0 · 16 HP
 
-Wake is a stereo delay for long, deep trails. Every echo behaves like the wake behind a ship: it **spreads out, fades, darkens and drifts** as it trails away, and some of them break up. Three knobs do most of the work. **DISTANCE** is how long the trail lasts and how wide it spreads, **CHOP** is how often a repeat drops out, **DRIFT** is how far the pitch wanders. **TIME** picks a musical division of the tempo, **BCLM** (becalm) stops the ship dead, and **PURG** clears the water. Every knob takes CV, and both buttons have a gate or trigger input.
+Wake is a stereo delay for long, deep trails. Every echo behaves like the wake behind a ship: it **spreads out, fades, darkens and drifts** as it trails away, and some of them break up. Three knobs do most of the work. **DISTANCE** is how long the trail lasts and how wide it spreads, **CHOP** is how often a repeat drops out, **DRIFT** is how far the pitch wanders. **TIME** picks a musical division of the tempo, **BCLM** (becalm) stops the ship dead, and **CLR** clears the water. Every knob takes CV, and both buttons have a gate or trigger input.
 
 ## The panel
 
 Everything below is at its default setting. Wake comes in two panels, silver and black: Rack picks one from its own dark-panel setting, and you can force either from the module's right-click menu.
 
-- **CHOP** (Large knob · 0–100% · default 0): Repeats that break up. Each repeat has a chance of dropping out, rolled afresh every time, with no seed and no pattern. At 0% every repeat comes back; at 100% about nine in ten are dropped.
-- **DISTANCE** (Large knob · 0–100% · default 50): How long the trail lasts and how wide it spreads. Higher means more feedback and a wider stereo spread, and the last 5% holds the trail as a bed, kept safe by a soft limiter.
+- **CHOP** (Large knob · 0–100% · default 0): Repeats that break up. Each repeat has a chance of dropping out, rolled afresh every time, with no seed and no pattern. The trail carries on underneath, so a different set of repeats is heard each time round. At 0% every repeat comes back; at 100% about nine in ten are dropped.
+- **DISTANCE** (Large knob · 0–100% · default 50): How long the trail lasts and how wide it spreads. Higher means more feedback and a wider stereo spread, and the last 5% holds the trail as a bed, kept clean by a slow leveller in the loop.
 - **DRIFT** (Large knob · 0–100% · default 0): How far the pitch wanders. Steady at zero, a gentle sine wobble in the lower half, then random wander with tape wow, flutter and a darker top in the upper half. It acts on the repeats, never the dry signal.
 - **GAIN** (Small knob · 0–100% · default 50): Level into the delay. 50% is unity, 100% is double. The dry signal is not touched. Not an audio input: those are IN L and IN R. Has a CV input.
 - **TIME** (Small knob · 25 steps · default 1/4): A stepped dial of musical divisions of the tempo, from 1/32 to four bars. It snaps, shows each step by name, and glides like tape when moved while repeats are sounding. Has a CV input: 10 V sweeps all 25 steps.
@@ -20,7 +20,7 @@ Everything below is at its default setting. Wake comes in two panels, silver and
 - **TONE** (Small knob · 0–100% · default 30): How much each repeat darkens: a low-pass inside the loop, applied again on every pass. 0% leaves the top open, 100% is about 1 kHz. Has a CV input.
 - **BCLM** (Button, latching): Becalm. The current repeats hold and loop, and new input is shut out. The held loop is an exact copy, so it neither decays nor gets noisier. Lit while on. A gate into the jack below does the same.
 - **MIX** (Small knob · 0–100% · default 50): Equal-power dry/wet. 100% is the classic send-return wash. Has a CV input.
-- **PURG** (Button): Purge. Empties the repeats: the wet fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched. A trigger into the jack below does the same.
+- **CLR** (Button): Clear. Empties the repeats: the wet fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched. A trigger into the jack below does the same.
 - **IN L** (Audio input): Left audio in. Patch a mono source here and IN R follows it. A polyphonic cable is summed to one signal.
 - **IN R** (Audio input): Right audio in. Normalled to IN L, so it can stay empty for a mono source.
 - **OUT L** (Audio output): Left audio out: the dry and wet signal, mixed by MIX.
@@ -35,7 +35,7 @@ Everything below is at its default setting. Wake comes in two panels, silver and
 - **TONE CV** (CV input): Sums with the knob. +10 V adds the full range and −10 V takes it away, held between 0 and 100%.
 - **BCLM gate** (Gate input): High (about 2 V or more) holds the repeats, exactly as the button does. Drop the gate to release.
 - **MIX CV** (CV input): Sums with the knob. +10 V adds the full range and −10 V takes it away, held between 0 and 100%.
-- **PURG trigger** (Trigger input): A rising edge (above about 2 V) empties the repeats, exactly as the button does. Any clock, gate or trigger will do.
+- **CLR trigger** (Trigger input): A rising edge (above about 2 V) empties the repeats, exactly as the button does. Any clock, gate or trigger will do.
 - **THE SCREEN** (Display): A small boat with its wake opening out behind it. Each ripple is a repeat. TIME spaces the ripples, DISTANCE lengthens and widens the wake, CHOP breaks ripples into fragments (some become dotted ghosts), DRIFT makes the wake wobble and, past halfway, adds tape grain and a slow weave. The ripples glow with the delay’s own level. When becalmed, the boat stops, the wake holds still and the sea goes glassy.
 
 ## The three knobs
@@ -48,13 +48,13 @@ IN → GAIN → DELAY (TIME) → TONE → LOOP (DISTANCE · CHOP · DRIFT) → R
 
 Low, you get a few repeats close together. Turn it up and each pass keeps more of the last, so the trail runs longer. At noon each repeat keeps about 60% of the one before; at 95% it keeps about 98%.
 
-**The last few degrees hold.** In the final 5% the feedback reaches 100%, so the trail no longer dies: it holds as a bed. A soft limiter sits inside the loop, so it never runs away, and a trail can run for minutes. PURG clears it.
+**The last few degrees hold.** In the final 5% the feedback reaches 100%, so the trail no longer dies: it holds as a bed. A slow leveller sits inside the loop: when sustained sound piles up in a long trail it eases the feedback back smoothly, so the bed stays clean instead of distorting, it never runs away, and a trail can run for minutes. CLR clears it.
 
 The same knob opens the stereo image. The right side runs a little longer than the left, by up to 1.5% at full, so each repeat lands further from its left twin than the last did, and a mono sound comes apart into stereo as it trails. The two sides stay separate, so a stereo input stays stereo.
 
 ### CHOP: repeats that break up
 
-Each repeat has a chance of dropping out. The loop is gated one delay time at a time, with a few milliseconds of fade, so a dropped repeat leaves a gap, and whatever would have followed it is gone too. Fresh input carries on. At 0% every repeat comes back; at 100% about nine in ten are dropped.
+Each repeat has a chance of dropping out. What you hear is gated one delay time at a time, with a few milliseconds of fade, so a dropped repeat leaves a gap. The trail itself keeps circulating underneath, so the repeats that follow are still there: a different set comes through each time round and the echoes break into a rhythm. At 0% every repeat comes back; at 100% about nine in ten are dropped.
 
 It is purely random. The dice are rolled afresh for every repeat, with no seed and no pattern to learn. With a long DISTANCE, a little CHOP breaks the trail into scattered fragments.
 
@@ -127,8 +127,8 @@ Times shown are at 120 BPM, before any fold-down.
 | TONE | 0–100% | How much each repeat darkens. A low-pass inside the loop, applied again on every pass, so the tail gets duller as it trails. 0% leaves the top open (about 16 kHz), the default 30% is about 7 kHz, and 100% is about 1 kHz. The tape half of DRIFT darkens it further. |
 | GAIN | 0–100% | Level into the delay. 50% (the default) is unity and 100% is double. The dry signal is never touched, so GAIN only changes how loud the repeats are. Not an audio input: the audio jacks are IN L and IN R. |
 | MIX | 0–100% | Equal-power dry/wet. 100% is the classic send-return wash. |
-| BCLM | button + gate | Becalm: a becalmed ship stops dead. The current repeats hold and loop, and new input is shut out. It eases in over about a tenth of a second, and the held loop is an exact copy of itself, so it neither decays nor gets noisier, however long you hold it. While held, DISTANCE, CHOP, DRIFT and TONE have nothing to act on, TIME stays where it was, and MIX and the wet level still work. A gate of about 2 V or more into the jack below does the same as the button. The light shows it is on. Press again, or drop the gate, to release. |
-| PURG | button + trigger | Purge: empties the repeats. The wet signal fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched, and nothing is left to return later, even if you lengthen TIME. A rising edge (above about 2 V) into the jack below does the same, which makes it a performance control. It also empties a becalmed loop. |
+| BCLM | button + gate | Becalm: a becalmed ship stops dead. The current repeats hold and loop, and new input is shut out. It eases in over about a tenth of a second without a click, and the held loop is an exact copy of itself, so it neither decays nor gets noisier, however long you hold it. While held, DISTANCE, CHOP, DRIFT and TONE have nothing to act on, TIME stays where it was, and MIX and the wet level still work. A gate of about 2 V or more into the jack below does the same as the button. The light shows it is on. Press again, or drop the gate, to release. |
+| CLR | button + trigger | Clear: empties the repeats. The wet signal fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched, and nothing is left to return later, even if you lengthen TIME. A rising edge (above about 2 V) into the jack below does the same, which makes it a performance control. It also empties a becalmed loop. |
 
 ## Patching and CV
 
@@ -143,7 +143,7 @@ Wake is stereo and not polyphonic. It expects ordinary Eurorack audio, about ±5
 | TIME | CV in | +10 V sweeps all 25 steps, added to the knob and held to the range. The step is always a whole one. |
 | CLCK | clock in | Sets the tempo from the spacing of the pulses (rising edge above about 2 V), using the pulses-per-beat setting in the menu. Overrides the CLCK knob while it runs. |
 | BCLM | gate in | High (about 2 V or more) holds the repeats, as the button does. |
-| PURG | trigger in | A rising edge (above about 2 V) empties the repeats, exactly like the button. |
+| CLR | trigger in | A rising edge (above about 2 V) empties the repeats, exactly like the button. |
 
 > **Nothing steps.** Every level and filter glides inside the engine, so stepped CV, fast envelopes and sample-and-hold sources stay clean. The one thing that moves in steps is TIME, and it glides between them.
 
@@ -198,7 +198,7 @@ Wake rebuilds its buffer, which clears the repeats. They start again as audio ar
 
 **The trail at full DISTANCE won't die.**
 
-By design: in the last 5% the feedback holds. Lower DISTANCE, or press PURG.
+By design: in the last 5% the feedback holds. Lower DISTANCE, or press CLR.
 
 **The panel won't change colour.**
 
@@ -212,7 +212,7 @@ Use the module's right-click **Panel** menu. If it is set to Follow Rack setting
 | Time | 25 steps | 1/32 to 4 bars, from a clock or 20–300 BPM; steps longer than the maximum halve until they fit |
 | Max delay time | 5 – 30 s | default 10 s; stored as 16-bit stereo, about 192 KB per second at 48 kHz (10 s is 1.9 MB) |
 | Audio | about ±5 V | in and out; IN R normalled to IN L |
-| CV | 10 V = full range | DIST, CHOP, DRFT, GAIN, REV, TONE, MIX; TIME 10 V = all 25 steps; CLCK is a clock, BCLM a gate, PURG a trigger |
+| CV | 10 V = full range | DIST, CHOP, DRFT, GAIN, REV, TONE, MIX; TIME 10 V = all 25 steps; CLCK is a clock, BCLM a gate, CLR a trigger |
 | Sample rate | 8 kHz and up | the buffer is rebuilt, and clears, when Rack changes it |
 | Platforms | Mac · Windows · Linux | Apple Silicon and Intel Macs |
 
