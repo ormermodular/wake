@@ -110,7 +110,7 @@
     and some of them break up. Three knobs do most of the work. <b>DISTANCE</b> is how long the
     trail lasts and how wide it spreads, <b>CHOP</b> is how often a repeat drops out,
     <b>DRIFT</b> is how far the pitch wanders. <b>TIME</b> picks a musical division of the
-    tempo, <b>BCLM</b> (becalm) stops the ship dead, and <b>PURG</b> clears the water. Every
+    tempo, <b>BCLM</b> (becalm) stops the ship dead, and <b>CLR</b> clears the water. Every
     knob takes CV, and both buttons have a gate or trigger input.</p>
     <nav class="toc">
       <a href="#panel">The panel</a><a href="#knobs">The three knobs</a>
@@ -163,18 +163,20 @@
     last, so the trail runs longer. At noon each repeat keeps about 60% of the one before; at
     95% it keeps about 98%.</p>
     <p><b>The last few degrees hold.</b> In the final 5% the feedback reaches 100%, so the trail
-    no longer dies: it holds as a bed. A soft limiter sits inside the loop, so it never runs
-    away, and a trail can run for minutes. PURG clears it.</p>
+    no longer dies: it holds as a bed. A slow leveller sits inside the loop: when sustained sound
+    piles up in a long trail it eases the feedback back smoothly, so the bed stays clean
+    instead of distorting, it never runs away, and a trail can run for minutes. CLR clears it.</p>
     <p>The same knob opens the stereo image. The right side runs a little longer than the left,
     by up to 1.5% at full, so each repeat lands further from its left twin than the last did,
     and a mono sound comes apart into stereo as it trails. The two sides stay separate, so a
     stereo input stays stereo.</p>
 
     <h3>CHOP: repeats that break up</h3>
-    <p>Each repeat has a chance of dropping out. The loop is gated one delay time at a time,
-    with a few milliseconds of fade, so a dropped repeat leaves a gap, and whatever would have
-    followed it is gone too. Fresh input carries on. At 0% every repeat comes back; at 100%
-    about nine in ten are dropped.</p>
+    <p>Each repeat has a chance of dropping out. What you hear is gated one delay time at a
+    time, with a few milliseconds of fade, so a dropped repeat leaves a gap. The trail itself
+    keeps circulating underneath, so the repeats that follow are still there: a different set
+    comes through each time round and the echoes break into a rhythm. At 0% every repeat
+    comes back; at 100% about nine in ten are dropped.</p>
     <p>It is purely random. The dice are rolled afresh for every repeat, with no seed and no
     pattern to learn. With a long DISTANCE, a little CHOP breaks the trail into scattered
     fragments.</p>
@@ -235,8 +237,8 @@
       <tr><td>TONE</td><td>0–100%</td><td>How much each repeat darkens. A low-pass inside the loop, applied again on every pass, so the tail gets duller as it trails. 0% leaves the top open (about 16 kHz), the default 30% is about 7 kHz, and 100% is about 1 kHz. The tape half of DRIFT darkens it further.</td></tr>
       <tr><td>GAIN</td><td>0–100%</td><td>Level into the delay. 50% (the default) is unity and 100% is double. The dry signal is never touched, so GAIN only changes how loud the repeats are. Not an audio input: the audio jacks are IN L and IN R.</td></tr>
       <tr><td>MIX</td><td>0–100%</td><td>Equal-power dry/wet. 100% is the classic send-return wash.</td></tr>
-      <tr><td>BCLM</td><td>button + gate</td><td>Becalm: a becalmed ship stops dead. The current repeats hold and loop, and new input is shut out. It eases in over about a tenth of a second, and the held loop is an exact copy of itself, so it neither decays nor gets noisier, however long you hold it. While held, DISTANCE, CHOP, DRIFT and TONE have nothing to act on, TIME stays where it was, and MIX and the wet level still work. A gate of about 2&nbsp;V or more into the jack below does the same as the button. The light shows it is on. Press again, or drop the gate, to release.</td></tr>
-      <tr><td>PURG</td><td>button + trigger</td><td>Purge: empties the repeats. The wet signal fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched, and nothing is left to return later, even if you lengthen TIME. A rising edge (above about 2&nbsp;V) into the jack below does the same, which makes it a performance control. It also empties a becalmed loop.</td></tr>
+      <tr><td>BCLM</td><td>button + gate</td><td>Becalm: a becalmed ship stops dead. The current repeats hold and loop, and new input is shut out. It eases in over about a tenth of a second without a click, and the held loop is an exact copy of itself, so it neither decays nor gets noisier, however long you hold it. While held, DISTANCE, CHOP, DRIFT and TONE have nothing to act on, TIME stays where it was, and MIX and the wet level still work. A gate of about 2&nbsp;V or more into the jack below does the same as the button. The light shows it is on. Press again, or drop the gate, to release.</td></tr>
+      <tr><td>CLR</td><td>button + trigger</td><td>Clear: empties the repeats. The wet signal fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched, and nothing is left to return later, even if you lengthen TIME. A rising edge (above about 2&nbsp;V) into the jack below does the same, which makes it a performance control. It also empties a becalmed loop.</td></tr>
     </table></div>
   </section>
 
@@ -255,7 +257,7 @@
       <tr><td>TIME</td><td>CV in</td><td>+10&nbsp;V sweeps all 25 steps, added to the knob and held to the range. The step is always a whole one.</td></tr>
       <tr><td>CLCK</td><td>clock in</td><td>Sets the tempo from the spacing of the pulses (rising edge above about 2&nbsp;V), using the pulses-per-beat setting in the menu. Overrides the CLCK knob while it runs.</td></tr>
       <tr><td>BCLM</td><td>gate in</td><td>High (about 2&nbsp;V or more) holds the repeats, as the button does.</td></tr>
-      <tr><td>PURG</td><td>trigger in</td><td>A rising edge (above about 2&nbsp;V) empties the repeats, exactly like the button.</td></tr>
+      <tr><td>CLR</td><td>trigger in</td><td>A rising edge (above about 2&nbsp;V) empties the repeats, exactly like the button.</td></tr>
     </table></div>
     <p class="note" style="margin-top:14px"><b>Nothing steps.</b> Every level and filter glides
     inside the engine, so stepped CV, fast envelopes and sample-and-hold sources stay clean.
@@ -312,7 +314,7 @@
       <dd>Wake rebuilds its buffer, which clears the repeats. They start again as audio
       arrives.</dd>
       <dt>The trail at full DISTANCE won't die.</dt>
-      <dd>By design: in the last 5% the feedback holds. Lower DISTANCE, or press PURG.</dd>
+      <dd>By design: in the last 5% the feedback holds. Lower DISTANCE, or press CLR.</dd>
       <dt>The panel won't change colour.</dt>
       <dd>Use the module's right-click <b>Panel</b> menu. If it is set to Follow Rack setting,
       Rack's <b>View &gt; Use dark panels if available</b> decides.</dd>
@@ -327,7 +329,7 @@
       <tr><td>Time</td><td>25 steps</td><td>1/32 to 4 bars, from a clock or 20–300 BPM; steps longer than the maximum halve until they fit</td></tr>
       <tr><td>Max delay time</td><td>5 – 30 s</td><td>default 10 s; stored as 16-bit stereo, about 192 KB per second at 48 kHz (10 s is 1.9 MB)</td></tr>
       <tr><td>Audio</td><td>about ±5 V</td><td>in and out; IN R normalled to IN L</td></tr>
-      <tr><td>CV</td><td>10 V = full range</td><td>DIST, CHOP, DRFT, GAIN, REV, TONE, MIX; TIME 10 V = all 25 steps; CLCK is a clock, BCLM a gate, PURG a trigger</td></tr>
+      <tr><td>CV</td><td>10 V = full range</td><td>DIST, CHOP, DRFT, GAIN, REV, TONE, MIX; TIME 10 V = all 25 steps; CLCK is a clock, BCLM a gate, CLR a trigger</td></tr>
       <tr><td>Sample rate</td><td>8 kHz and up</td><td>the buffer is rebuilt, and clears, when Rack changes it</td></tr>
       <tr><td>Platforms</td><td>Mac · Windows · Linux</td><td>Apple Silicon and Intel Macs</td></tr>
     </table></div>
@@ -347,12 +349,12 @@
  "chop": [
   "Large knob · 0–100% · default 0",
   "CHOP",
-  "Repeats that break up. Each repeat has a chance of dropping out, rolled afresh every time, with no seed and no pattern. At 0% every repeat comes back; at 100% about nine in ten are dropped."
+  "Repeats that break up. Each repeat has a chance of dropping out, rolled afresh every time, with no seed and no pattern. The trail carries on underneath, so a different set of repeats is heard each time round. At 0% every repeat comes back; at 100% about nine in ten are dropped."
  ],
  "dist": [
   "Large knob · 0–100% · default 50",
   "DISTANCE",
-  "How long the trail lasts and how wide it spreads. Higher means more feedback and a wider stereo spread, and the last 5% holds the trail as a bed, kept safe by a soft limiter."
+  "How long the trail lasts and how wide it spreads. Higher means more feedback and a wider stereo spread, and the last 5% holds the trail as a bed, kept clean by a slow leveller in the loop."
  ],
  "drift": [
   "Large knob · 0–100% · default 0",
@@ -394,10 +396,10 @@
   "MIX",
   "Equal-power dry/wet. 100% is the classic send-return wash. Has a CV input."
  ],
- "purg": [
+ "clr": [
   "Button",
-  "PURG",
-  "Purge. Empties the repeats: the wet fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched. A trigger into the jack below does the same."
+  "CLR",
+  "Clear. Empties the repeats: the wet fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched. A trigger into the jack below does the same."
  ],
  "inl": [
   "Audio input",
@@ -471,7 +473,7 @@
  ],
  "trig": [
   "Trigger input",
-  "PURG trigger",
+  "CLR trigger",
   "A rising edge (above about 2 V) empties the repeats, exactly as the button does. Any clock, gate or trigger will do."
  ],
  "screen": [
@@ -491,7 +493,7 @@
     ['chop', 17.69, 68.20, 14.7], ['dist', 40.61, 66.72, 17.6], ['drift', 63.53, 68.20, 14.7],
     ['gain', C[0], 86.34, 7.2], ['time', C[1], 86.34, 7.2], ['clck', C[2], 86.34, 7.2],
     ['rev', C[3], 86.34, 7.2], ['tone', C[4], 86.34, 7.2], ['bclm', C[5], 86.34, 7.2],
-    ['mix', C[6], 86.34, 7.2], ['purg', C[7], 86.34, 7.2],
+    ['mix', C[6], 86.34, 7.2], ['clr', C[7], 86.34, 7.2],
     ['cvgain', C[0], 97.40, 8.6], ['cvtime', C[1], 97.40, 8.6], ['clock', C[2], 97.40, 8.6],
     ['cvrev', C[3], 97.40, 8.6], ['cvtone', C[4], 97.40, 8.6], ['gate', C[5], 97.40, 8.6],
     ['cvmix', C[6], 97.40, 8.6], ['trig', C[7], 97.40, 8.6],
