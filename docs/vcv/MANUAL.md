@@ -86,7 +86,7 @@ A step longer than the maximum delay time **halves until it fits**, so it stays 
 
 By default, change TIME while repeats are sounding and they glide to the new delay like tape, rather than cutting. A small step is a quick swoop. A big jump takes a few seconds and bends further: shortening can lift the pitch by up to a fifth, and lengthening can drop it by up to an octave while the delay travels. Park the knob before a take if you don't want it. DRIFT works on the same glide, which is why they suit each other.
 
-If you would rather the pitch never moved, choose **Changing TIME > Crossfade** in the right-click menu. A change then jumps to the new delay and the old repeats fade into the new ones over a tenth of a second: no bend, no click, a quick blend instead of a swoop.
+If you would rather the pitch never moved, choose **Time change mode > Crossfade** in the right-click menu. A change then jumps to the new delay and the old repeats fade into the new ones over a tenth of a second: no bend, no click, a quick blend instead of a swoop.
 
 | # | Step | Beats | At 120 BPM |
 |---|---|---|---|
@@ -155,7 +155,7 @@ Wake is stereo and not polyphonic. It expects ordinary Eurorack audio, about ±5
 |---|---|---|
 | Wet level | 0 to +12 dB | Make-up gain on the wet path, after the delay and before the mix. Pull GAIN back for headroom, then push the repeats back up here. At 0 dB (the default) the repeats are exactly as they are without it. The dry signal is not touched. |
 | Max delay time | 5 · 10 · 15 · 20 · 30 s | How much audio Wake keeps. Default 10 s. Longer steps fold down to fit (see Time and tempo). Changing it rebuilds the buffer and clears the repeats. The choice is saved with the patch. |
-| Changing TIME | Tape glide · Crossfade | How a TIME change is made while repeats are sounding. Tape glide (the default) slides the delay like tape, so the pitch bends. Crossfade jumps to the new delay and fades the old repeats into it over about a tenth of a second, so the pitch never moves. Saved with the patch. |
+| Time change mode | Tape glide · Crossfade | How a TIME change is made while repeats are sounding. Tape glide (the default) slides the delay like tape, so the pitch bends. Crossfade jumps to the new delay and fades the old repeats into it over about a tenth of a second, so the pitch never moves. Saved with the patch. |
 | Clock pulses per beat | 1 · 2 · 4 · 24 | How many pulses of a patched clock make one beat. Default 4. Saved with the patch. |
 | Panel | Follow Rack setting · Silver · Black | Forces the silver or the black panel for this module. The jacks and screws change with it. The choice is saved with the patch. By default the panel follows Rack's **View > Use dark panels if available**. |
 
@@ -185,7 +185,7 @@ REV only works while the delay is at most half the maximum delay time. Choose a 
 
 **The pitch swoops when I change TIME.**
 
-That is the tape glide: the delay slides to its new length instead of cutting. A big jump bends further and takes a few seconds. Change it slowly, or before a take, or choose **Changing TIME > Crossfade** in the right-click menu for no pitch change at all.
+That is the tape glide: the delay slides to its new length instead of cutting. A big jump bends further and takes a few seconds. Change it slowly, or before a take, or choose **Time change mode > Crossfade** in the right-click menu for no pitch change at all.
 
 **TIME won't move while BCLM is lit.**
 
