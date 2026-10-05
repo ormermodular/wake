@@ -10,11 +10,11 @@
 
 Wake is an ambient delay for long, deep trails. Every echo behaves like the wake
 behind a ship: it spreads out, fades, darkens and drifts as it trails away, and
-some of the echoes break up.
+some of the echoes stutter.
 
 Three macro knobs do most of the work. **DISTANCE** sets how long the trail
-lasts and how wide it spreads, **CHOP** gives each repeat a chance of dropping
-out, and **DRIFT** lets the pitch wander from a gentle wobble to tape wow and
+lasts and how wide it spreads, **CHOP** gives each repeat a chance of stuttering,
+and **DRIFT** lets the pitch wander from a gentle wobble to tape wow and
 flutter. A stepped **TIME** dial picks one of 25 musical divisions of the
 tempo, from a clock or an internal tempo, and moving it bends the repeats like
 tape. **REV** turns repeats backwards, **TONE** darkens each one, **BCLM**

@@ -4,13 +4,13 @@
 
 USER MANUAL · VCV RACK · v2.0.0 · 16 HP
 
-Wake is a stereo delay for long, deep trails. Every echo behaves like the wake behind a ship: it **spreads out, fades, darkens and drifts** as it trails away, and some of them break up. Three knobs do most of the work. **DISTANCE** is how long the trail lasts and how wide it spreads, **CHOP** is how often a repeat drops out, **DRIFT** is how far the pitch wanders. **TIME** picks a musical division of the tempo, **BCLM** (becalm) stops the ship dead, and **CLR** clears the water. Every knob takes CV, and both buttons have a gate or trigger input.
+Wake is a stereo delay for long, deep trails. Every echo behaves like the wake behind a ship: it **spreads out, fades, darkens and drifts** as it trails away, and some of them stutter. Three knobs do most of the work. **DISTANCE** is how long the trail lasts and how wide it spreads, **CHOP** is how much the repeats stutter, **DRIFT** is how far the pitch wanders. **TIME** picks a musical division of the tempo, **BCLM** (becalm) stops the ship dead, and **CLR** clears the water. Every knob takes CV, and both buttons have a gate or trigger input.
 
 ## The panel
 
 Everything below is at its default setting. Wake comes in two panels, silver and black: Rack picks one from its own dark-panel setting, and you can force either from the module's right-click menu.
 
-- **CHOP** (Large knob · 0–100% · default 0): Repeats that break up. Each repeat has a chance of dropping out, rolled afresh every time, with no seed and no pattern. The trail carries on underneath, so a different set of repeats is heard each time round. At 0% every repeat comes back; at 100% about nine in ten are dropped.
+- **CHOP** (Large knob · 0–100% · default 0): Repeats that stutter. Each repeat has a chance of being broken into a fragment that loops (a half, third, quarter, sixth or eighth), rolled afresh every time, with no seed and no pattern. The trail carries on underneath and the pitch never moves. At 0% every repeat plays straight; turn it up for more stutter and finer divisions.
 - **DISTANCE** (Large knob · 0–100% · default 50): How long the trail lasts and how wide it spreads. Higher means more feedback and a wider stereo spread, and the last 5% holds the trail as a bed, kept clean by a slow leveller in the loop.
 - **DRIFT** (Large knob · 0–100% · default 0): How far the pitch wanders. Steady at zero, a gentle sine wobble in the lower half, then random wander with tape wow, flutter and a darker top in the upper half. It acts on the repeats, never the dry signal.
 - **GAIN** (Small knob · 0–100% · default 50): Level into the delay. 50% is unity, 100% is double. The dry signal is not touched. Not an audio input: those are IN L and IN R. Has a CV input.
@@ -52,11 +52,11 @@ Low, you get a few repeats close together. Turn it up and each pass keeps more o
 
 The same knob opens the stereo image. The right side runs a little longer than the left, by up to 1.5% at full, so each repeat lands further from its left twin than the last did, and a mono sound comes apart into stereo as it trails. The two sides stay separate, so a stereo input stays stereo.
 
-### CHOP: repeats that break up
+### CHOP: repeats that stutter
 
-Each repeat has a chance of dropping out. What you hear is gated one delay time at a time, with a few milliseconds of fade, so a dropped repeat leaves a gap. The trail itself keeps circulating underneath, so the repeats that follow are still there: a different set comes through each time round and the echoes break into a rhythm. At 0% every repeat comes back; at 100% about nine in ten are dropped.
+Each repeat has a chance of being broken into a fragment that repeats: the first half, third, quarter, sixth or eighth of the repeat is looped for the length of that repeat, each grain faded in and out over a few milliseconds. At 0% every repeat plays straight. As you turn it up, more repeats stutter, and the divisions get finer.
 
-It is purely random. The dice are rolled afresh for every repeat, with no seed and no pattern to learn. With a long DISTANCE, a little CHOP breaks the trail into scattered fragments.
+It changes what you hear, not the trail: the repeats keep circulating underneath, and the pitch never moves. It is purely random: the dice are rolled afresh for every repeat, with no seed and no pattern to learn. It needs the delay to be at most half the maximum delay time, like REV. While BCLM is holding the loop, CHOP rests.
 
 ### DRIFT: how far the pitch wanders
 
@@ -211,7 +211,7 @@ Use the module's right-click **Panel** menu. If it is set to Follow Rack setting
 
 | Format | Rack 2 · 16 HP | Stereo, not polyphonic. Silver and black panels. |
 |---|---|---|
-| Engine | stereo delay with feedback | Interpolated delay line; soft limiter and low-pass in the loop; per-repeat dropout; reversed output tap; DRIFT on the delay time (sine, random wander, tape wow and flutter); exact-copy hold |
+| Engine | stereo delay with feedback | Interpolated delay line; soft limiter and low-pass in the loop; per-repeat stutter; reversed output tap; DRIFT on the delay time (sine, random wander, tape wow and flutter); exact-copy hold |
 | Time | 25 steps | 1/32 to 4 bars, from a clock or 20–300 BPM; steps longer than the maximum halve until they fit |
 | Max delay time | 5 – 30 s | default 10 s; stored as 16-bit stereo, about 192 KB per second at 48 kHz (10 s is 1.9 MB) |
 | Audio | about ±5 V | in and out; IN R normalled to IN L |
