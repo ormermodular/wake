@@ -218,12 +218,15 @@
     as 8. The maximum is a right-click choice: 5, 10, 15, 20 or 30 seconds. Changing it rebuilds
     the buffer, which clears the repeats.</p>
 
-    <h3>Moving TIME bends the pitch</h3>
-    <p>Change TIME while repeats are sounding and they glide to the new delay like tape,
+    <h3>Moving TIME: tape glide or crossfade</h3>
+    <p>By default, change TIME while repeats are sounding and they glide to the new delay like tape,
     rather than cutting. A small step is a quick swoop. A big jump takes a few seconds and
     bends further: shortening can lift the pitch by up to a fifth, and lengthening can drop it
     by up to an octave while the delay travels. Park the knob before a take if you don't want
     it. DRIFT works on the same glide, which is why they suit each other.</p>
+    <p>If you would rather the pitch never moved, choose <b>Changing TIME &gt; Crossfade</b> in the
+    right-click menu. A change then jumps to the new delay and the old repeats fade into the new
+    ones over a tenth of a second: no bend, no click, a quick blend instead of a swoop.</p>
 
     <div class="steps"><div class="tablewrap"><table><tr><th>#</th><th>Step</th><th>Beats</th><th>At 120 BPM</th></tr><tr><td>1</td><td>1/32</td><td>1/8</td><td>62.5 ms</td></tr><tr><td>2</td><td>1/16 septuplet</td><td>1/7</td><td>71.4 ms</td></tr><tr><td>3</td><td>1/16 triplet</td><td>1/6</td><td>83.3 ms</td></tr><tr><td>4</td><td>1/16 quintuplet</td><td>1/5</td><td>100.0 ms</td></tr><tr><td>5</td><td>1/16</td><td>1/4</td><td>125.0 ms</td></tr><tr><td>6</td><td>1/8 triplet</td><td>1/3</td><td>166.7 ms</td></tr><tr><td>7</td><td>dotted 1/16</td><td>3/8</td><td>187.5 ms</td></tr><tr><td>8</td><td>1/8 quintuplet</td><td>2/5</td><td>200.0 ms</td></tr><tr><td>9</td><td>1/8</td><td>1/2</td><td>250.0 ms</td></tr><tr><td>10</td><td>1/4 triplet</td><td>2/3</td><td>333.3 ms</td></tr><tr><td>11</td><td>dotted 1/8</td><td>3/4</td><td>375.0 ms</td></tr><tr><td>12</td><td>1/4 (default)</td><td>1</td><td>500.0 ms</td></tr><tr><td>13</td><td>5/16</td><td>5/4</td><td>625.0 ms</td></tr></table></div><div class="tablewrap"><table><tr><th>#</th><th>Step</th><th>Beats</th><th>At 120 BPM</th></tr><tr><td>14</td><td>1/2 triplet</td><td>4/3</td><td>666.7 ms</td></tr><tr><td>15</td><td>dotted 1/4</td><td>3/2</td><td>750.0 ms</td></tr><tr><td>16</td><td>7/16</td><td>7/4</td><td>875.0 ms</td></tr><tr><td>17</td><td>1/2</td><td>2</td><td>1.00 s</td></tr><tr><td>18</td><td>5/8</td><td>5/2</td><td>1.25 s</td></tr><tr><td>19</td><td>dotted 1/2</td><td>3</td><td>1.50 s</td></tr><tr><td>20</td><td>7/8</td><td>7/2</td><td>1.75 s</td></tr><tr><td>21</td><td>1 bar</td><td>4</td><td>2.00 s</td></tr><tr><td>22</td><td>1.5 bars</td><td>6</td><td>3.00 s</td></tr><tr><td>23</td><td>2 bars</td><td>8</td><td>4.00 s</td></tr><tr><td>24</td><td>3 bars</td><td>12</td><td>6.00 s</td></tr><tr><td>25</td><td>4 bars</td><td>16</td><td>8.00 s</td></tr></table></div></div>
     <p style="margin-top:14px">Times shown are at 120 BPM, before any fold-down.</p>
@@ -237,7 +240,7 @@
       <tr><td>TONE</td><td>0–100%</td><td>How much each repeat darkens. A low-pass inside the loop, applied again on every pass, so the tail gets duller as it trails. 0% leaves the top open (about 16 kHz), the default 30% is about 7 kHz, and 100% is about 1 kHz. The tape half of DRIFT darkens it further.</td></tr>
       <tr><td>GAIN</td><td>0–100%</td><td>Level into the delay. 50% (the default) is unity and 100% is double. The dry signal is never touched, so GAIN only changes how loud the repeats are. Not an audio input: the audio jacks are IN L and IN R.</td></tr>
       <tr><td>MIX</td><td>0–100%</td><td>Equal-power dry/wet. 100% is the classic send-return wash.</td></tr>
-      <tr><td>BCLM</td><td>button + gate</td><td>Becalm: a becalmed ship stops dead. The current repeats hold and loop, and new input is shut out. It eases in over about a tenth of a second without a click, and the held loop is an exact copy of itself, so it neither decays nor gets noisier, however long you hold it. While held, DISTANCE, CHOP, DRIFT and TONE have nothing to act on, TIME stays where it was, and MIX and the wet level still work. A gate of about 2&nbsp;V or more into the jack below does the same as the button. The light shows it is on. Press again, or drop the gate, to release.</td></tr>
+      <tr><td>BCLM</td><td>button + gate</td><td>Becalm: a becalmed ship stops dead. The current repeats hold and loop, and new input is shut out. It eases in over about a tenth of a second without a click, and the held loop is an exact copy of itself, so it neither decays nor gets noisier, however long you hold it. While held, DRIFT still moves the frozen loop (it bends how the loop is read, so the stored copy is never harmed, and turning DRIFT back down returns the loop exactly as it was). DISTANCE, CHOP and TONE have nothing to act on, TIME stays where it was, and MIX and the wet level still work. A gate of about 2&nbsp;V or more into the jack below does the same as the button. The light shows it is on. Press again, or drop the gate, to release.</td></tr>
       <tr><td>CLR</td><td>button + trigger</td><td>Clear: empties the repeats. The wet signal fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched, and nothing is left to return later, even if you lengthen TIME. A rising edge (above about 2&nbsp;V) into the jack below does the same, which makes it a performance control. It also empties a becalmed loop.</td></tr>
     </table></div>
   </section>
@@ -270,6 +273,7 @@
       <tr><th>Item</th><th>Choices</th><th>What it does</th></tr>
       <tr><td>Wet level</td><td>0 to +12 dB</td><td>Make-up gain on the wet path, after the delay and before the mix. Pull GAIN back for headroom, then push the repeats back up here. At 0 dB (the default) the repeats are exactly as they are without it. The dry signal is not touched.</td></tr>
       <tr><td>Max delay time</td><td>5 · 10 · 15 · 20 · 30 s</td><td>How much audio Wake keeps. Default 10 s. Longer steps fold down to fit (see Time and tempo). Changing it rebuilds the buffer and clears the repeats. The choice is saved with the patch.</td></tr>
+      <tr><td>Changing TIME</td><td>Tape glide · Crossfade</td><td>How a TIME change is made while repeats are sounding. Tape glide (the default) slides the delay like tape, so the pitch bends. Crossfade jumps to the new delay and fades the old repeats into it over about a tenth of a second, so the pitch never moves. Saved with the patch.</td></tr>
       <tr><td>Clock pulses per beat</td><td>1 · 2 · 4 · 24</td><td>How many pulses of a patched clock make one beat. Default 4. Saved with the patch.</td></tr>
       <tr><td>Panel</td><td>Follow Rack setting · Silver · Black</td><td>Forces the silver or the black panel for this module. The jacks and screws change with it. The choice is saved with the patch. By default the panel follows Rack's <b>View &gt; Use dark panels if available</b>.</td></tr>
     </table></div>
@@ -303,7 +307,8 @@
       shorter TIME step, a faster tempo, or a longer maximum in the right-click menu.</dd>
       <dt>The pitch swoops when I change TIME.</dt>
       <dd>That is the tape glide: the delay slides to its new length instead of cutting. A big
-      jump bends further and takes a few seconds. Change it slowly, or before a take.</dd>
+      jump bends further and takes a few seconds. Change it slowly, or before a take, or choose
+      <b>Changing TIME &gt; Crossfade</b> in the right-click menu for no pitch change at all.</dd>
       <dt>TIME won't move while BCLM is lit.</dt>
       <dd>Becalm holds the loop at the length it had. TIME takes effect when you release it.</dd>
       <dt>The tempo knob does nothing.</dt>
@@ -389,7 +394,7 @@
  "bclm": [
   "Button, latching",
   "BCLM",
-  "Becalm. The current repeats hold and loop, and new input is shut out. The held loop is an exact copy, so it neither decays nor gets noisier. Lit while on. A gate into the jack below does the same."
+  "Becalm. The current repeats hold and loop, and new input is shut out. The held loop is an exact copy, so it neither decays nor gets noisier, and DRIFT can still move it. Lit while on. A gate into the jack below does the same."
  ],
  "mix": [
   "Small knob · 0–100% · default 50",
