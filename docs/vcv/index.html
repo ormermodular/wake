@@ -107,8 +107,8 @@
     <p class="vstamp">USER MANUAL · VCV RACK · v2.0.0 · 16 HP</p>
     <p class="lede">Wake is a stereo delay for long, deep trails. Every echo behaves like the
     wake behind a ship: it <b>spreads out, fades, darkens and drifts</b> as it trails away,
-    and some of them break up. Three knobs do most of the work. <b>DISTANCE</b> is how long the
-    trail lasts and how wide it spreads, <b>CHOP</b> is how often a repeat drops out,
+    and some of them stutter. Three knobs do most of the work. <b>DISTANCE</b> is how long the
+    trail lasts and how wide it spreads, <b>CHOP</b> is how much the repeats stutter,
     <b>DRIFT</b> is how far the pitch wanders. <b>TIME</b> picks a musical division of the
     tempo, <b>BCLM</b> (becalm) stops the ship dead, and <b>CLR</b> clears the water. Every
     knob takes CV, and both buttons have a gate or trigger input.</p>
@@ -171,15 +171,15 @@
     and a mono sound comes apart into stereo as it trails. The two sides stay separate, so a
     stereo input stays stereo.</p>
 
-    <h3>CHOP: repeats that break up</h3>
-    <p>Each repeat has a chance of dropping out. What you hear is gated one delay time at a
-    time, with a few milliseconds of fade, so a dropped repeat leaves a gap. The trail itself
-    keeps circulating underneath, so the repeats that follow are still there: a different set
-    comes through each time round and the echoes break into a rhythm. At 0% every repeat
-    comes back; at 100% about nine in ten are dropped.</p>
-    <p>It is purely random. The dice are rolled afresh for every repeat, with no seed and no
-    pattern to learn. With a long DISTANCE, a little CHOP breaks the trail into scattered
-    fragments.</p>
+    <h3>CHOP: repeats that stutter</h3>
+    <p>Each repeat has a chance of being broken into a fragment that repeats: the first half,
+    third, quarter, sixth or eighth of the repeat is looped for the length of that repeat, each
+    grain faded in and out over a few milliseconds. At 0% every repeat plays straight. As you
+    turn it up, more repeats stutter, and the divisions get finer.</p>
+    <p>It changes what you hear, not the trail: the repeats keep circulating underneath, and
+    the pitch never moves. It is purely random: the dice are rolled afresh for every repeat,
+    with no seed and no pattern to learn. It needs the delay to be at most half the maximum
+    delay time, like REV. While BCLM is holding the loop, CHOP rests.</p>
 
     <h3>DRIFT: how far the pitch wanders</h3>
     <p>Steady at zero. The lower half brings in a slow sine wobble of the delay time (about a
@@ -330,7 +330,7 @@
     <h2>Specifications</h2>
     <div class="tablewrap"><table class="wide">
       <tr><td>Format</td><td>Rack 2 · 16 HP</td><td>Stereo, not polyphonic. Silver and black panels.</td></tr>
-      <tr><td>Engine</td><td>stereo delay with feedback</td><td>Interpolated delay line; soft limiter and low-pass in the loop; per-repeat dropout; reversed output tap; DRIFT on the delay time (sine, random wander, tape wow and flutter); exact-copy hold</td></tr>
+      <tr><td>Engine</td><td>stereo delay with feedback</td><td>Interpolated delay line; soft limiter and low-pass in the loop; per-repeat stutter; reversed output tap; DRIFT on the delay time (sine, random wander, tape wow and flutter); exact-copy hold</td></tr>
       <tr><td>Time</td><td>25 steps</td><td>1/32 to 4 bars, from a clock or 20–300 BPM; steps longer than the maximum halve until they fit</td></tr>
       <tr><td>Max delay time</td><td>5 – 30 s</td><td>default 10 s; stored as 16-bit stereo, about 192 KB per second at 48 kHz (10 s is 1.9 MB)</td></tr>
       <tr><td>Audio</td><td>about ±5 V</td><td>in and out; IN R normalled to IN L</td></tr>
@@ -354,7 +354,7 @@
  "chop": [
   "Large knob · 0–100% · default 0",
   "CHOP",
-  "Repeats that break up. Each repeat has a chance of dropping out, rolled afresh every time, with no seed and no pattern. The trail carries on underneath, so a different set of repeats is heard each time round. At 0% every repeat comes back; at 100% about nine in ten are dropped."
+  "Repeats that stutter. Each repeat has a chance of being broken into a fragment that loops (a half, third, quarter, sixth or eighth), rolled afresh every time, with no seed and no pattern. The trail carries on underneath and the pitch never moves. At 0% every repeat plays straight; turn it up for more stutter and finer divisions."
  ],
  "dist": [
   "Large knob · 0–100% · default 50",
