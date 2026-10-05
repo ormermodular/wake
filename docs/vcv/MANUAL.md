@@ -18,7 +18,7 @@ Everything below is at its default setting. Wake comes in two panels, silver and
 - **CLCK** (Small knob · 20–300 BPM · default 120): The tempo, used when nothing is patched into the jack below. A patched clock sets the tempo instead. If the clock stops for four seconds the knob is used again.
 - **REV** (Small knob · 0–100% · default 0): How many repeats are heard backwards, chosen at random for each one. Heard at the output only, so reversed repeats do not flip back on the next pass. Works while the delay is at most half the maximum delay time. Has a CV input.
 - **TONE** (Small knob · 0–100% · default 30): How much each repeat darkens: a low-pass inside the loop, applied again on every pass. 0% leaves the top open, 100% is about 1 kHz. Has a CV input.
-- **BCLM** (Button, latching): Becalm. The current repeats hold and loop, and new input is shut out. The held loop is an exact copy, so it neither decays nor gets noisier. Lit while on. A gate into the jack below does the same.
+- **BCLM** (Button, latching): Becalm. The current repeats hold and loop, and new input is shut out. The held loop is an exact copy, so it neither decays nor gets noisier, and DRIFT can still move it. Lit while on. A gate into the jack below does the same.
 - **MIX** (Small knob · 0–100% · default 50): Equal-power dry/wet. 100% is the classic send-return wash. Has a CV input.
 - **CLR** (Button): Clear. Empties the repeats: the wet fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched. A trigger into the jack below does the same.
 - **IN L** (Audio input): Left audio in. Patch a mono source here and IN R follows it. A polyphonic cable is summed to one signal.
@@ -82,9 +82,11 @@ Patch a clock into the jack under CLCK and Wake sets the tempo from the spacing 
 
 A step longer than the maximum delay time **halves until it fits**, so it stays on the beat grid. At the default 10 seconds, four bars at 60 BPM would be 16 seconds, so it plays as 8. The maximum is a right-click choice: 5, 10, 15, 20 or 30 seconds. Changing it rebuilds the buffer, which clears the repeats.
 
-### Moving TIME bends the pitch
+### Moving TIME: tape glide or crossfade
 
-Change TIME while repeats are sounding and they glide to the new delay like tape, rather than cutting. A small step is a quick swoop. A big jump takes a few seconds and bends further: shortening can lift the pitch by up to a fifth, and lengthening can drop it by up to an octave while the delay travels. Park the knob before a take if you don't want it. DRIFT works on the same glide, which is why they suit each other.
+By default, change TIME while repeats are sounding and they glide to the new delay like tape, rather than cutting. A small step is a quick swoop. A big jump takes a few seconds and bends further: shortening can lift the pitch by up to a fifth, and lengthening can drop it by up to an octave while the delay travels. Park the knob before a take if you don't want it. DRIFT works on the same glide, which is why they suit each other.
+
+If you would rather the pitch never moved, choose **Time change mode > Crossfade** in the right-click menu. A change then jumps to the new delay and the old repeats fade into the new ones over a tenth of a second: no bend, no click, a quick blend instead of a swoop.
 
 | # | Step | Beats | At 120 BPM |
 |---|---|---|---|
@@ -127,7 +129,7 @@ Times shown are at 120 BPM, before any fold-down.
 | TONE | 0–100% | How much each repeat darkens. A low-pass inside the loop, applied again on every pass, so the tail gets duller as it trails. 0% leaves the top open (about 16 kHz), the default 30% is about 7 kHz, and 100% is about 1 kHz. The tape half of DRIFT darkens it further. |
 | GAIN | 0–100% | Level into the delay. 50% (the default) is unity and 100% is double. The dry signal is never touched, so GAIN only changes how loud the repeats are. Not an audio input: the audio jacks are IN L and IN R. |
 | MIX | 0–100% | Equal-power dry/wet. 100% is the classic send-return wash. |
-| BCLM | button + gate | Becalm: a becalmed ship stops dead. The current repeats hold and loop, and new input is shut out. It eases in over about a tenth of a second without a click, and the held loop is an exact copy of itself, so it neither decays nor gets noisier, however long you hold it. While held, DISTANCE, CHOP, DRIFT and TONE have nothing to act on, TIME stays where it was, and MIX and the wet level still work. A gate of about 2 V or more into the jack below does the same as the button. The light shows it is on. Press again, or drop the gate, to release. |
+| BCLM | button + gate | Becalm: a becalmed ship stops dead. The current repeats hold and loop, and new input is shut out. It eases in over about a tenth of a second without a click, and the held loop is an exact copy of itself, so it neither decays nor gets noisier, however long you hold it. While held, DRIFT still moves the frozen loop (it bends how the loop is read, so the stored copy is never harmed, and turning DRIFT back down returns the loop exactly as it was). DISTANCE, CHOP and TONE have nothing to act on, TIME stays where it was, and MIX and the wet level still work. A gate of about 2 V or more into the jack below does the same as the button. The light shows it is on. Press again, or drop the gate, to release. |
 | CLR | button + trigger | Clear: empties the repeats. The wet signal fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched, and nothing is left to return later, even if you lengthen TIME. A rising edge (above about 2 V) into the jack below does the same, which makes it a performance control. It also empties a becalmed loop. |
 
 ## Patching and CV
@@ -153,6 +155,7 @@ Wake is stereo and not polyphonic. It expects ordinary Eurorack audio, about ±5
 |---|---|---|
 | Wet level | 0 to +12 dB | Make-up gain on the wet path, after the delay and before the mix. Pull GAIN back for headroom, then push the repeats back up here. At 0 dB (the default) the repeats are exactly as they are without it. The dry signal is not touched. |
 | Max delay time | 5 · 10 · 15 · 20 · 30 s | How much audio Wake keeps. Default 10 s. Longer steps fold down to fit (see Time and tempo). Changing it rebuilds the buffer and clears the repeats. The choice is saved with the patch. |
+| Time change mode | Tape glide · Crossfade | How a TIME change is made while repeats are sounding. Tape glide (the default) slides the delay like tape, so the pitch bends. Crossfade jumps to the new delay and fades the old repeats into it over about a tenth of a second, so the pitch never moves. Saved with the patch. |
 | Clock pulses per beat | 1 · 2 · 4 · 24 | How many pulses of a patched clock make one beat. Default 4. Saved with the patch. |
 | Panel | Follow Rack setting · Silver · Black | Forces the silver or the black panel for this module. The jacks and screws change with it. The choice is saved with the patch. By default the panel follows Rack's **View > Use dark panels if available**. |
 
@@ -182,7 +185,7 @@ REV only works while the delay is at most half the maximum delay time. Choose a 
 
 **The pitch swoops when I change TIME.**
 
-That is the tape glide: the delay slides to its new length instead of cutting. A big jump bends further and takes a few seconds. Change it slowly, or before a take.
+That is the tape glide: the delay slides to its new length instead of cutting. A big jump bends further and takes a few seconds. Change it slowly, or before a take, or choose **Time change mode > Crossfade** in the right-click menu for no pitch change at all.
 
 **TIME won't move while BCLM is lit.**
 
