@@ -1,0 +1,318 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wake NT Manual</title>
+<style>
+  /* Single look, the Ormer Modular manual house style: night-sea blue-grey with the lamp amber.
+     Layout: one centred column; the interactive panel is the hero. */
+  :root{
+    --bg:#0b1119; --panel:#1c242e; --panel-edge:#39424e; --card:#141b24; --rule:#2c3641;
+    --ink:#c9d9e6; --strong:#e8eef5; --muted:#84939f; --accent:#e2a24a;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font-family:var(--mono);margin:0;padding-block:40px 90px;padding-inline:20px}
+  .wrap{max-width:840px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+  .eyebrow{color:var(--accent);font-size:11px;letter-spacing:.22em;text-transform:uppercase}
+  h1{font-size:30px;font-weight:700;color:#eef2f6;margin:10px 0 4px;letter-spacing:.14em;text-wrap:balance}
+  .vstamp{color:var(--muted);font-size:11px;letter-spacing:.14em;margin:0 0 10px}
+  .lede{color:var(--muted);font-size:13.5px;line-height:1.7;max-width:64ch;margin:0}
+  .lede b{color:var(--ink)}
+  h2{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0 0 16px;font-weight:600;text-wrap:balance}
+  h3{font-size:13px;color:var(--strong);margin:22px 0 8px;font-weight:700;letter-spacing:.02em}
+  section>h3:first-of-type{margin-top:0}
+  p{font-size:12.5px;line-height:1.75;color:var(--muted);margin:0 0 10px;max-width:70ch}
+  p b,li b,dd b{color:var(--ink)}
+  p code,li code,td code,dd code{color:var(--accent);background:rgba(226,162,74,.08);padding:0 4px;border-radius:3px;font-size:.95em}
+  ul,ol{margin:0 0 10px;padding-left:20px;display:flex;flex-direction:column;gap:7px}
+  li{font-size:12.5px;line-height:1.7;color:var(--muted);min-width:0}
+  li::marker{color:var(--accent)}
+  a{color:var(--accent)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .toc a{color:var(--ink);text-decoration:none;font-size:10.5px;letter-spacing:.08em;
+    border:1px solid var(--panel-edge);border-radius:999px;padding:5px 12px;background:var(--card)}
+  .toc a:hover,.toc a:focus-visible{border-color:var(--accent);color:var(--accent);outline:none}
+
+  /* interactive panel */
+  .stage{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:28px;align-items:start}
+  @media (max-width:700px){.stage{grid-template-columns:minmax(0,1fr)}}
+  .figcol{display:flex;flex-direction:column;gap:12px;max-width:360px;width:100%;margin-inline:auto}
+  .seg{display:flex;gap:0;border:1px solid var(--panel-edge);border-radius:999px;overflow:hidden;align-self:flex-start}
+  .seg button{font:inherit;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:6px 14px;
+    background:var(--card);color:var(--muted);border:0;cursor:pointer}
+  .seg button+button{border-left:1px solid var(--panel-edge)}
+  .seg button[aria-pressed="true"]{background:var(--accent);color:#1a1206;font-weight:700}
+  .fig{position:relative;border-radius:6px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.5);
+    aspect-ratio:960/1518;background:#171717}
+  .fig img{display:block;width:100%;height:100%}
+  [hidden]{display:none!important}
+  .hs{position:absolute;transform:translate(-50%,-50%);aspect-ratio:1;border-radius:50%;padding:0;
+    border:2px solid transparent;background:transparent;cursor:pointer}
+  .hs:hover{border-color:rgba(226,162,74,.55)}
+  .hs[aria-pressed="true"]{border-color:var(--accent);background:rgba(226,162,74,.16)}
+  .hs.rect{border-radius:4px;aspect-ratio:auto;transform:none}
+  .info{border:1px solid var(--panel-edge);border-radius:10px;background:var(--card);padding:18px 20px;min-height:12em}
+  .info .kind{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
+  .info h3{margin:0 0 10px;font-size:16px;letter-spacing:.1em}
+  .info p{font-size:12.5px}
+  .hint{font-size:11px;color:var(--muted);margin-top:10px}
+
+  table{border-collapse:collapse;width:100%;font-size:12px}
+  th{color:var(--muted);font-weight:600;text-align:left;font-size:10px;text-transform:uppercase;
+    letter-spacing:.14em;padding:8px 12px;border-bottom:1px solid var(--rule)}
+  td{padding:8px 12px;border-bottom:1px solid var(--panel);vertical-align:top;line-height:1.6;color:var(--muted)}
+  td:first-child{color:var(--strong);font-weight:700;white-space:nowrap}
+  td:nth-child(2){color:var(--accent);white-space:nowrap}
+  .tablewrap{overflow-x:auto}
+  .wide td:nth-child(2){white-space:normal}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px}
+  .card{border:1px solid var(--panel-edge);border-radius:10px;background:var(--card);padding:16px 18px}
+  .card h4{margin:0 0 8px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600}
+  .card p{margin:0;font-size:12px}
+  .card .set{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);
+    font-size:11px;color:#a9b4c0;line-height:1.8}
+  .card .set b{color:var(--accent);font-weight:600}
+
+  .note{border:1px solid var(--panel-edge);border-left:3px solid var(--accent);border-radius:8px;
+    background:var(--card);padding:12px 16px;font-size:12px;color:var(--muted);line-height:1.7;max-width:none}
+  .note b{color:var(--ink)}
+
+  .flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0 14px}
+  .flow span{border:1px solid var(--panel-edge);background:var(--card);border-radius:6px;
+    padding:5px 10px;font-size:10.5px;letter-spacing:.08em;color:var(--ink)}
+  .flow em{color:var(--accent);font-style:normal;font-size:11px}
+
+  .qa dt{font-size:12.5px;color:var(--strong);font-weight:700;margin-top:14px}
+  .qa dt:first-child{margin-top:0}
+  .qa dd{margin:4px 0 0;font-size:12.5px;line-height:1.7;color:var(--muted)}
+
+  footer{border-top:1px solid var(--panel);padding-top:22px;text-align:center}
+  footer p{max-width:none;margin:0 0 6px}
+  .fin{color:var(--accent);letter-spacing:.3em;font-size:10px;text-transform:uppercase}
+
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:18px}
+  .steps table td:first-child{white-space:nowrap}
+  .steps td:nth-child(3),.steps td:nth-child(4){color:var(--muted);white-space:nowrap}
+</style>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Ormer Modular · made in Guernsey</div>
+    <h1>WAKE</h1>
+    <p class="vstamp">USER MANUAL · DISTING NT · v1.0.0</p>
+    <p class="lede">Wake is a stereo delay for long, deep trails, for the Expert Sleepers disting NT.
+    Every echo behaves like the wake behind a ship: it <b>spreads out, fades, darkens and drifts</b>
+    as it trails away, and some of them stutter. Three controls do most of the work.
+    <b>Distance</b> is how long the trail lasts and how wide it spreads, <b>Chop</b> is how much the
+    repeats stutter, <b>Drift</b> is how far the pitch wanders. <b>Time</b> picks a musical division
+    of the tempo, <b>Becalm</b> stops the ship dead, and <b>Clear</b> clears the water. Wake is free.</p>
+    <nav class="toc">
+      <a href="#install">Installing</a><a href="#screen">The screen and the pots</a>
+      <a href="#knobs">The three macros</a><a href="#time">Time and tempo</a>
+      <a href="#more">The other controls</a><a href="#params">All parameters</a>
+      <a href="#routing">Routing</a><a href="#trouble">Troubleshooting</a>
+      <a href="#specs">Specifications</a>
+    </nav>
+  </header>
+
+  <section id="install">
+    <h2>Installing</h2>
+    <ol>
+      <li>Download <b>wake-plugin.zip</b> from the Wake releases page and unzip it onto the root of the
+      disting NT's SD card. It puts <code>wake.o</code> in <code>programs/plug-ins/ormermodular/</code>.</li>
+      <li>Put the card back in the NT and restart it.</li>
+      <li>Add an algorithm and choose <b>Wake</b> (it is under Effect and Delay).</li>
+    </ol>
+    <p>Wake needs a disting NT with firmware that lets a plug-in re-seed the pots after a bank change
+    (<b>v1.19</b> or later). On earlier firmware the pots in banks two and three can jump.</p>
+    <p>When you add Wake it asks for one thing, the <b>Max time</b>: how many seconds of delay to reserve
+    in memory, from 5 to 30 (default 10). It cannot be changed afterwards without re-adding the
+    algorithm, and longer takes more memory: about 192 KB per second at 48 kHz.</p>
+  </section>
+
+  <section id="screen">
+    <h2>The screen and the pots</h2>
+    <div style="max-width:768px;margin:0 0 12px"><img alt="The Wake screen: the boat, with the wake opening out behind it" src="data:image/webp;base64,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" style="width:100%;height:auto;aspect-ratio:4/1;position:static;image-rendering:pixelated;display:block;border:1px solid var(--rule);border-radius:6px"></div>
+    <p style="margin-top:12px">A boat sits at the top and its wake opens out beneath it. The wake is the delay,
+    drawn live: it is brighter when the repeats are louder, wider with <b>Distance</b>, broken into pieces
+    with <b>Chop</b>, flipped with <b>Reverse</b>, wobbling with <b>Drift</b> and frozen still while
+    <b>Becalm</b> holds. Along the bottom, three names show what the three pots are doing now, each with a
+    level bar. Three dots in the corner show which of the three banks you are on.</p>
+    <p>The three pots work in three <b>banks</b>. Push the centre pot to move to the next bank:</p>
+    <div class="tablewrap"><table>
+      <tr><th>Bank</th><th>Left pot</th><th>Centre pot</th><th>Right pot</th></tr>
+      <tr><td>1</td><td>Distance</td><td>Chop</td><td>Drift</td></tr>
+      <tr><td>2</td><td>Time</td><td>Reverse</td><td>Tone</td></tr>
+      <tr><td>3</td><td>Mix</td><td>Input</td><td>Tempo</td></tr>
+    </table></div>
+    <p>The pot pushes do the rest: <b>push the left pot</b> to toggle <b>Becalm</b>, <b>push the right pot</b>
+    to <b>Clear</b>. The labels BECALM and CLEAR appear at the top of the screen as you do it. The four
+    buttons under the screen keep their usual jobs (Menu, Params, Help, Shift).</p>
+    <p class="note"><b>Pots after a bank change:</b> the firmware holds each pot until you turn it
+    past the value it already has, so a bank change never makes a parameter jump.</p>
+  </section>
+
+  <section id="knobs">
+    <h2>The three macros</h2>
+    <p>Under the controls is one stereo delay line with feedback. You never meet its parameters raw.
+    Each macro is <b>one control that moves several things along a single curve</b>.</p>
+    <div class="flow">
+      <span>IN</span><em>→</em><span>INPUT</span><em>→</em><span>DELAY (TIME)</span><em>→</em>
+      <span>TONE</span><em>→</em><span>LOOP (DISTANCE · CHOP · DRIFT)</span><em>→</em>
+      <span>REVERSE</span><em>→</em><span>MIX</span><em>→</em><span>OUT</span>
+    </div>
+    <h3>Distance: how long the trail lasts, how wide it spreads</h3>
+    <p>Low, you get a few repeats close together. Turn it up and each pass keeps more of the
+    last, so the trail runs longer. At 50% each repeat keeps about 60% of the one before; at
+    95% it keeps about 98%.</p>
+    <p><b>The last few degrees hold.</b> In the final 5% the feedback reaches 100%, so the trail
+    no longer dies: it holds as a bed. A slow leveller sits inside the loop: when sustained sound
+    piles up in a long trail it eases the feedback back smoothly, so the bed stays clean
+    instead of distorting, it never runs away, and a trail can run for minutes. Clear empties it.</p>
+    <p>The same control opens the stereo image. The right side runs a little longer than the left,
+    by up to 1.5% at full, so each repeat lands further from its left twin than the last did,
+    and a mono sound comes apart into stereo as it trails.</p>
+    <h3>Chop: repeats that stutter</h3>
+    <p>Each repeat has a chance of being broken into a fragment that repeats: the first half,
+    third, quarter, sixth or eighth of the repeat is looped for the length of that repeat, each
+    grain faded in and out over a few milliseconds. At 0% every repeat plays straight. As you
+    turn it up, more repeats stutter, and the divisions get finer.</p>
+    <p>It changes what you hear, not the trail: the repeats keep circulating underneath, and
+    the pitch never moves. It is purely random, rolled afresh for every repeat. It needs the delay
+    to be at most half the Max time, like Reverse, and it rests while Becalm holds the loop.</p>
+    <h3>Drift: how far the pitch wanders</h3>
+    <p>Steady at zero. The lower half brings in a slow sine wobble of the delay time, different on each
+    side, deepest around 45%. From 40% genuine random wander takes over, and from 45% <b>the tape
+    comes in</b>: wow and flutter, a little saturation in the loop and a darker top. At full, pitch
+    moves by up to about 4%, which is under a semitone. It acts on the repeats only, never on the
+    dry signal.</p>
+    <p class="note"><b>Feel:</b> Drift moves settle over a fraction of a second, so the weather
+    changes rather than switches. With Distance high, Drift and Tone together make a trail
+    that wanders and darkens as it goes. That is the idea.</p>
+  </section>
+
+  <section id="time">
+    <h2>Time and tempo</h2>
+    <h3>Time: a division of the tempo</h3>
+    <p><b>Time</b> is a stepped parameter of <b>25 musical divisions</b>, from a 1/32 up to four bars,
+    including septuplets, quintuplets, 5/16, 7/16, 5/8, 7/8, one and a half bars and three
+    bars. The default is 1/4. The delay time is the step multiplied by the length of a beat.</p>
+    <h3>Where the tempo comes from</h3>
+    <p>Choose a bus for <b>Clock input</b> (on the Clock page) and Wake sets the tempo from the spacing of
+    the pulses, a clock or a gate going up through about 2&nbsp;V. <b>Clock PPQN</b> says how many pulses
+    make a beat (1, 2, 4 or 24, default 4). With <b>Clock input</b> set to None, the <b>Tempo</b>
+    parameter sets it, from 20 to 300 BPM (default 120). If a clock stops for four seconds, Wake falls
+    back to Tempo. A clock with jitter in it makes the delay time wobble a little: that is the clock.</p>
+    <h3>Long steps fold down</h3>
+    <p>A step longer than the Max time <b>halves until it fits</b>, so it stays on the beat grid.
+    At the default 10 seconds, four bars at 60 BPM would be 16 seconds, so it plays as 8.</p>
+    <h3>Moving Time: tape glide or crossfade</h3>
+    <p>By default, change <b>Time</b> while repeats are sounding and they glide to the new delay like tape,
+    rather than cutting. A small step is a quick swoop. A big jump takes a few seconds and
+    bends further: shortening can lift the pitch by up to a fifth, and lengthening can drop it
+    by up to an octave while the delay travels. Drift works on the same glide.</p>
+    <p>If you would rather the pitch never moved, set <b>Time change</b> to <b>Crossfade</b>. A change
+    then jumps to the new delay and the old repeats fade into the new ones over a tenth of a second:
+    no bend, no click.</p>
+    <div class="steps"><div class="tablewrap"><table><tr><th>#</th><th>Step</th><th>Beats</th><th>At 120 BPM</th></tr><tr><td>1</td><td>1/32</td><td>1/8</td><td>62.5 ms</td></tr><tr><td>2</td><td>1/16 septuplet</td><td>1/7</td><td>71.4 ms</td></tr><tr><td>3</td><td>1/16 triplet</td><td>1/6</td><td>83.3 ms</td></tr><tr><td>4</td><td>1/16 quintuplet</td><td>1/5</td><td>100.0 ms</td></tr><tr><td>5</td><td>1/16</td><td>1/4</td><td>125.0 ms</td></tr><tr><td>6</td><td>1/8 triplet</td><td>1/3</td><td>166.7 ms</td></tr><tr><td>7</td><td>dotted 1/16</td><td>3/8</td><td>187.5 ms</td></tr><tr><td>8</td><td>1/8 quintuplet</td><td>2/5</td><td>200.0 ms</td></tr><tr><td>9</td><td>1/8</td><td>1/2</td><td>250.0 ms</td></tr><tr><td>10</td><td>1/4 triplet</td><td>2/3</td><td>333.3 ms</td></tr><tr><td>11</td><td>dotted 1/8</td><td>3/4</td><td>375.0 ms</td></tr><tr><td>12</td><td>1/4 (default)</td><td>1</td><td>500.0 ms</td></tr><tr><td>13</td><td>5/16</td><td>5/4</td><td>625.0 ms</td></tr></table></div><div class="tablewrap"><table><tr><th>#</th><th>Step</th><th>Beats</th><th>At 120 BPM</th></tr><tr><td>14</td><td>1/2 triplet</td><td>4/3</td><td>666.7 ms</td></tr><tr><td>15</td><td>dotted 1/4</td><td>3/2</td><td>750.0 ms</td></tr><tr><td>16</td><td>7/16</td><td>7/4</td><td>875.0 ms</td></tr><tr><td>17</td><td>1/2</td><td>2</td><td>1.00 s</td></tr><tr><td>18</td><td>5/8</td><td>5/2</td><td>1.25 s</td></tr><tr><td>19</td><td>dotted 1/2</td><td>3</td><td>1.50 s</td></tr><tr><td>20</td><td>7/8</td><td>7/2</td><td>1.75 s</td></tr><tr><td>21</td><td>1 bar</td><td>4</td><td>2.00 s</td></tr><tr><td>22</td><td>1.5 bars</td><td>6</td><td>3.00 s</td></tr><tr><td>23</td><td>2 bars</td><td>8</td><td>4.00 s</td></tr><tr><td>24</td><td>3 bars</td><td>12</td><td>6.00 s</td></tr><tr><td>25</td><td>4 bars</td><td>16</td><td>8.00 s</td></tr></table></div></div>
+    <p style="margin-top:14px">Times shown are at 120 BPM, before any fold-down.</p>
+  </section>
+
+  <section id="more">
+    <h2>The other controls</h2>
+    <div class="tablewrap"><table>
+      <tr><th>Control</th><th>Range</th><th>What it does</th></tr>
+      <tr><td>Reverse</td><td>0–100%</td><td>How many repeats are heard backwards. Each repeat is chosen at random, so 50% is a mix of forward and backward. It is heard at the output only: the feedback loop always runs forward. A reversed repeat is the slice just recorded, played backwards, so it arrives one delay time late. It only works while the delay is at most half the Max time; beyond that, repeats stay forward.</td></tr>
+      <tr><td>Tone</td><td>0–100%</td><td>How bright each repeat stays: left for dark, right for open. A low-pass inside the loop, applied again on every pass, so the tail gets duller as it trails. 100% leaves the top open (about 16 kHz), the default 70% is about 7 kHz, and 0% is about 1 kHz.</td></tr>
+      <tr><td>Input</td><td>0–100%</td><td>Level into the delay. 50% (the default) is unity and 100% is double. The dry signal is never touched, so Input only changes how loud the repeats are.</td></tr>
+      <tr><td>Mix</td><td>0–100%</td><td>Equal-power dry/wet. 100% is the classic send-return wash.</td></tr>
+      <tr><td>Becalm</td><td>Off / On</td><td>A becalmed ship stops dead. The current repeats hold and loop, and new input is shut out. It eases in over about a tenth of a second without a click, and the held loop is an exact copy of itself, so it neither decays nor gets noisier, however long you hold it. While held, Drift still moves the frozen loop and turning it back down returns the loop exactly as it was. Time stays where it was, and Mix and Wet level still work. Push the left pot, or map a gate to the parameter.</td></tr>
+      <tr><td>Clear</td><td>trigger</td><td>Empties the repeats. The wet signal fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched, and nothing is left to return later, even if you lengthen Time. It also empties a becalmed loop. Push the right pot, or map a gate to the parameter: a rising edge clears.</td></tr>
+      <tr><td>Wet level</td><td>0 to +12 dB</td><td>Make-up gain on the wet path, after the delay and before the mix. Pull Input back for headroom, then push the repeats back up here. At 0 dB (the default) the repeats are exactly as they are without it. Parameter only: it has no pot.</td></tr>
+    </table></div>
+  </section>
+
+  <section id="params">
+    <h2>All parameters</h2>
+    <p>On the Params screen, Wake has three pages. Every parameter can be mapped to CV, MIDI or I2C in the
+    usual way.</p>
+    <div class="tablewrap"><table class="wide">
+      <tr><th>Page</th><th>Parameter</th><th>Range</th><th>Default</th></tr>
+      <tr><td>Wake</td><td>Time</td><td>25 steps</td><td>1/4</td></tr>
+      <tr><td>Wake</td><td>Distance</td><td>0–100.0%</td><td>50.0%</td></tr>
+      <tr><td>Wake</td><td>Chop</td><td>0–100.0%</td><td>0%</td></tr>
+      <tr><td>Wake</td><td>Drift</td><td>0–100.0%</td><td>0%</td></tr>
+      <tr><td>Wake</td><td>Reverse</td><td>0–100.0%</td><td>0%</td></tr>
+      <tr><td>Wake</td><td>Tone</td><td>0–100.0%</td><td>70.0%</td></tr>
+      <tr><td>Wake</td><td>Mix</td><td>0–100%</td><td>50%</td></tr>
+      <tr><td>Wake</td><td>Input</td><td>0–100%</td><td>50%</td></tr>
+      <tr><td>Wake</td><td>Becalm</td><td>Off / On</td><td>Off</td></tr>
+      <tr><td>Wake</td><td>Clear</td><td>- / Clear</td><td>-</td></tr>
+      <tr><td>Wake</td><td>Wet level</td><td>0–12.0 dB</td><td>0 dB</td></tr>
+      <tr><td>Wake</td><td>Time change</td><td>Tape glide / Crossfade</td><td>Tape glide</td></tr>
+      <tr><td>Clock</td><td>Tempo</td><td>20–300 BPM</td><td>120</td></tr>
+      <tr><td>Clock</td><td>Clock input</td><td>None, or a bus</td><td>None</td></tr>
+      <tr><td>Clock</td><td>Clock PPQN</td><td>1 / 2 / 4 / 24</td><td>4</td></tr>
+      <tr><td>Routing</td><td>Left input, Right input</td><td>bus</td><td>1, None</td></tr>
+      <tr><td>Routing</td><td>Left output, Right output (and modes)</td><td>bus, Add / Replace</td><td>13, 14, Replace</td></tr>
+    </table></div>
+  </section>
+
+  <section id="routing">
+    <h2>Routing</h2>
+    <p>Wake is stereo. It expects ordinary Eurorack audio, about ±5&nbsp;V at the peaks, and puts out the
+    same level. Set <b>Right input</b> to None and the left input feeds both sides, so a mono source gives
+    a stereo trail. Each output has an <b>Add</b> or <b>Replace</b> mode, as on any NT algorithm: Replace
+    (the default) writes the mix to the bus, Add sums it onto what is already there.</p>
+  </section>
+
+  <section id="trouble">
+    <h2>Troubleshooting</h2>
+    <dl class="qa">
+      <dt>I hear nothing.</dt>
+      <dd>Check the Routing page: the input bus has to carry your audio and the outputs have to go where
+      you are listening. With Mix at zero you hear only the dry signal.</dd>
+      <dt>I hear the dry signal but no repeats.</dt>
+      <dd>Check Mix is above zero, Input isn't at zero, and Becalm isn't on with nothing in the loop
+      (becalm shuts new input out). A very low Distance gives just a few short repeats.</dd>
+      <dt>Reverse does nothing.</dt>
+      <dd>Reverse only works while the delay is at most half the Max time. Choose a shorter Time step,
+      a faster tempo, or re-add Wake with a longer Max time.</dd>
+      <dt>The pitch swoops when I change Time.</dt>
+      <dd>That is the tape glide. Change it slowly, or set <b>Time change</b> to Crossfade for no pitch
+      change at all.</dd>
+      <dt>The Tempo pot does nothing.</dt>
+      <dd>A clock is set on Clock input and it takes over. Set Clock input to None, or stop the clock for
+      four seconds. If the tempo is a multiple or fraction of what you expect, check Clock PPQN.</dd>
+      <dt>The buttons under the screen do their normal jobs.</dt>
+      <dd>Yes, on purpose. Becalm and Clear are on the pot pushes (left and right), and the centre push
+      changes the bank.</dd>
+      <dt>The trail at full Distance won't die.</dt>
+      <dd>By design: in the last 5% the feedback holds. Lower Distance, or push the right pot to Clear.</dd>
+    </dl>
+  </section>
+
+  <section id="specs">
+    <h2>Specifications</h2>
+    <div class="tablewrap"><table class="wide">
+      <tr><td>Format</td><td>disting NT plug-in</td><td>Stereo in, stereo out. Free.</td></tr>
+      <tr><td>Engine</td><td>stereo delay with feedback</td><td>Interpolated delay line; leveller and low-pass in the loop; per-repeat stutter; reversed output tap; Drift on the delay time (sine, then random wander and tape)</td></tr>
+      <tr><td>Time</td><td>25 steps</td><td>1/32 to 4 bars, from a clock or 20–300 BPM; steps longer than the Max time halve until they fit</td></tr>
+      <tr><td>Max time</td><td>5 – 30 s</td><td>chosen when the algorithm is added, default 10 s; stored as 16-bit stereo, about 192 KB per second at 48 kHz</td></tr>
+      <tr><td>Audio</td><td>about ±5 V</td><td>in and out; right input optional (None: left feeds both)</td></tr>
+      <tr><td>Firmware</td><td>v1.19 or later</td><td>for pot takeover after a bank change</td></tr>
+    </table></div>
+    <p style="margin-top:14px">Wake's engine is original. It uses no third-party DSP. Wake is closed-source and
+    proprietary.</p>
+  </section>
+
+  <footer>
+    <p>Wake for disting NT · Ormer Modular · made in Guernsey</p>
+    <p class="fin">fair winds</p>
+  </footer>
+
+</div>
