@@ -14,7 +14,7 @@ Wake is a stereo delay for long, deep trails, for the Expert Sleepers disting NT
 
 Wake needs a disting NT with firmware that lets a plug-in re-seed the pots after a bank change (**v1.19** or later). On earlier firmware the pots in banks two and three can jump.
 
-When you add Wake it asks for one thing, the **Max time**: how many seconds of delay to reserve in memory, from 5 to 30 (default 10). It cannot be changed afterwards without re-adding the algorithm, and longer takes more memory: about 192 KB per second at 48 kHz.
+When you add Wake it asks for one thing, the **Max time**: how many seconds of delay to reserve in memory, from 5 to 30 (default 10). It cannot be changed afterwards without re-adding the algorithm, and longer takes more memory: about 192 KB per second at 48 kHz, so 30 seconds is about 5.8 MB. The NT has 16 MB in all, shared with everything else in the preset, and it will not add an algorithm if there isn't enough memory left. If that happens, choose a shorter Max time.
 
 ## The screen and the pots
 
