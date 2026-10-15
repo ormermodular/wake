@@ -149,9 +149,13 @@
       <tr><td>2</td><td>Time</td><td>Reverse</td><td>Tone</td></tr>
       <tr><td>3</td><td>Mix</td><td>Input</td><td>Tempo</td></tr>
     </table></div>
-    <p>The pot pushes do the rest: <b>push the left pot</b> to toggle <b>Becalm</b>, <b>push the right pot</b>
-    to <b>Clear</b>. The labels BECALM and CLEAR appear at the top of the screen as you do it. The four
-    buttons under the screen keep their usual jobs (Menu, Params, Help, Shift).</p>
+    <p>That is all Wake takes over: the three pot turns and the centre-pot push. Everything else on the
+    NT keeps its usual job: the four buttons under the screen (Menu, Params, Help, Shift), the left pot
+    push (back to the overview), the right pot push (jump to the knob) and the encoders.</p>
+    <p><b>Becalm</b> and <b>Clear</b> are ordinary parameters on the Wake page. Set them from the
+    parameter list, or map a gate, button or sequencer output to them in Mappings. The word BECALM shows
+    at the top left of the screen while it is on, and CLEAR flashes at the top right when the repeats
+    are emptied.</p>
     <p class="note"><b>Pots after a bank change:</b> the firmware holds each pot until you turn it
     past the value it already has, so a bank change never makes a parameter jump.</p>
   </section>
@@ -230,8 +234,8 @@
       <tr><td>Tone</td><td>0–100%</td><td>How bright each repeat stays: left for dark, right for open. A low-pass inside the loop, applied again on every pass, so the tail gets duller as it trails. 100% leaves the top open (about 16 kHz), the default 70% is about 7 kHz, and 0% is about 1 kHz.</td></tr>
       <tr><td>Input</td><td>0–100%</td><td>Level into the delay. 50% (the default) is unity and 100% is double. The dry signal is never touched, so Input only changes how loud the repeats are.</td></tr>
       <tr><td>Mix</td><td>0–100%</td><td>Equal-power dry/wet. 100% is the classic send-return wash.</td></tr>
-      <tr><td>Becalm</td><td>Off / On</td><td>A becalmed ship stops dead. The current repeats hold and loop, and new input is shut out. It eases in over about a tenth of a second without a click, and the held loop is an exact copy of itself, so it neither decays nor gets noisier, however long you hold it. While held, Drift still moves the frozen loop and turning it back down returns the loop exactly as it was. Time stays where it was, and Mix and Wet level still work. Push the left pot, or map a gate to the parameter.</td></tr>
-      <tr><td>Clear</td><td>trigger</td><td>Empties the repeats. The wet signal fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched, and nothing is left to return later, even if you lengthen Time. It also empties a becalmed loop. Push the right pot, or map a gate to the parameter: a rising edge clears.</td></tr>
+      <tr><td>Becalm</td><td>Off / On</td><td>A becalmed ship stops dead. The current repeats hold and loop, and new input is shut out. It eases in over about a tenth of a second without a click, and the held loop is an exact copy of itself, so it neither decays nor gets noisier, however long you hold it. While held, Drift still moves the frozen loop and turning it back down returns the loop exactly as it was. Time stays where it was, and Mix and Wet level still work. Set it from the parameter list, or map a gate to it.</td></tr>
+      <tr><td>Clear</td><td>trigger</td><td>Empties the repeats. The wet signal fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched, and nothing is left to return later, even if you lengthen Time. It also empties a becalmed loop. Set it to Clear from the parameter list, or map a gate to it: a rising edge clears.</td></tr>
       <tr><td>Wet level</td><td>0 to +12 dB</td><td>Make-up gain on the wet path, after the delay and before the mix. Pull Input back for headroom, then push the repeats back up here. At 0 dB (the default) the repeats are exactly as they are without it. Parameter only: it has no pot.</td></tr>
     </table></div>
   </section>
@@ -288,11 +292,12 @@
       <dt>The Tempo pot does nothing.</dt>
       <dd>A clock is set on Clock input and it takes over. Set Clock input to None, or stop the clock for
       four seconds. If the tempo is a multiple or fraction of what you expect, check Clock PPQN.</dd>
-      <dt>The buttons under the screen do their normal jobs.</dt>
-      <dd>Yes, on purpose. Becalm and Clear are on the pot pushes (left and right), and the centre push
-      changes the bank.</dd>
+      <dt>Where are Becalm and Clear on the pots?</dt>
+      <dd>They are parameters, not pot controls. Wake only takes the three pot turns and the centre push,
+      so the buttons and the left and right pot pushes keep their normal jobs. Find Becalm and Clear on
+      the Wake page of the parameter list, or map a gate to them.</dd>
       <dt>The trail at full Distance won't die.</dt>
-      <dd>By design: in the last 5% the feedback holds. Lower Distance, or push the right pot to Clear.</dd>
+      <dd>By design: in the last 5% the feedback holds. Lower Distance, or set Clear.</dd>
     </dl>
   </section>
 
