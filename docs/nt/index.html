@@ -211,6 +211,11 @@
     make a beat (1, 2, 4 or 24, default 4). With <b>Clock input</b> set to None, the <b>Tempo</b>
     parameter sets it, from 20 to 300 BPM (default 120). If a clock stops for four seconds, Wake falls
     back to Tempo. A clock with jitter in it makes the delay time wobble a little: that is the clock.</p>
+    <p>Wake can also follow <b>MIDI clock</b>. Turn <b>MIDI clock</b> On (Clock page) and Wake takes its
+    tempo from the NT's MIDI clock, at the standard 24 ticks per beat, whether it comes from an external
+    source or from an algorithm on the NT that sends MIDI clock. MIDI stop hands the tempo back, and so
+    does four seconds without a tick. When MIDI clock is On and ticking it wins; otherwise the Clock input
+    bus is used, and otherwise the Tempo parameter.</p>
     <h3>Long steps fold down</h3>
     <p>A step longer than the Max time <b>halves until it fits</b>, so it stays on the beat grid.
     At the default 10 seconds, four bars at 60 BPM would be 16 seconds, so it plays as 8.</p>
@@ -261,6 +266,7 @@
       <tr><td>Clock</td><td>Tempo</td><td>20–300 BPM</td><td>120</td></tr>
       <tr><td>Clock</td><td>Clock input</td><td>None, or a bus</td><td>None</td></tr>
       <tr><td>Clock</td><td>Clock PPQN</td><td>1 / 2 / 4 / 24</td><td>4</td></tr>
+      <tr><td>Clock</td><td>MIDI clock</td><td>Off / On</td><td>Off</td></tr>
       <tr><td>Routing</td><td>Left input, Right input</td><td>bus</td><td>1, None</td></tr>
       <tr><td>Routing</td><td>Left output, Right output (and modes)</td><td>bus, Add / Replace</td><td>13, 14, Replace</td></tr>
     </table></div>
@@ -290,7 +296,7 @@
       <dd>That is the tape glide. Change it slowly, or set <b>Time change</b> to Crossfade for no pitch
       change at all.</dd>
       <dt>The Tempo pot does nothing.</dt>
-      <dd>A clock is set on Clock input and it takes over. Set Clock input to None, or stop the clock for
+      <dd>A clock is set on Clock input, or MIDI clock is On and ticking, and it takes over. Set Clock input to None, or stop the clock for
       four seconds. If the tempo is a multiple or fraction of what you expect, check Clock PPQN.</dd>
       <dt>Where are Becalm and Clear on the pots?</dt>
       <dd>They are parameters, not pot controls. Wake only takes the three pot turns and the centre push,

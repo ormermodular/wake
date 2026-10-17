@@ -70,6 +70,8 @@ Steady at zero. The lower half brings in a slow sine wobble of the delay time, d
 
 Choose a bus for **Clock input** (on the Clock page) and Wake sets the tempo from the spacing of the pulses, a clock or a gate going up through about 2 V. **Clock PPQN** says how many pulses make a beat (1, 2, 4 or 24, default 4). With **Clock input** set to None, the **Tempo** parameter sets it, from 20 to 300 BPM (default 120). If a clock stops for four seconds, Wake falls back to Tempo. A clock with jitter in it makes the delay time wobble a little: that is the clock.
 
+Wake can also follow **MIDI clock**. Turn **MIDI clock** On (Clock page) and Wake takes its tempo from the NT's MIDI clock, at the standard 24 ticks per beat, whether it comes from an external source or from an algorithm on the NT that sends MIDI clock. MIDI stop hands the tempo back, and so does four seconds without a tick. When MIDI clock is On and ticking it wins; otherwise the Clock input bus is used, and otherwise the Tempo parameter.
+
 ### Long steps fold down
 
 A step longer than the Max time **halves until it fits**, so it stays on the beat grid. At the default 10 seconds, four bars at 60 BPM would be 16 seconds, so it plays as 8.
@@ -146,6 +148,7 @@ On the Params screen, Wake has three pages. Every parameter can be mapped to CV,
 | Clock | Tempo | 20–300 BPM | 120 |
 | Clock | Clock input | None, or a bus | None |
 | Clock | Clock PPQN | 1 / 2 / 4 / 24 | 4 |
+| Clock | MIDI clock | Off / On | Off |
 | Routing | Left input, Right input | bus | 1, None |
 | Routing | Left output, Right output (and modes) | bus, Add / Replace | 13, 14, Replace |
 
@@ -173,7 +176,7 @@ That is the tape glide. Change it slowly, or set **Time change** to Crossfade fo
 
 **The Tempo pot does nothing.**
 
-A clock is set on Clock input and it takes over. Set Clock input to None, or stop the clock for four seconds. If the tempo is a multiple or fraction of what you expect, check Clock PPQN.
+A clock is set on Clock input, or MIDI clock is On and ticking, and it takes over. Set Clock input to None, or stop the clock for four seconds. If the tempo is a multiple or fraction of what you expect, check Clock PPQN.
 
 **Where are Becalm and Clear on the pots?**
 
