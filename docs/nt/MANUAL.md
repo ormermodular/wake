@@ -28,9 +28,14 @@ The three pots work in three **banks**. Push the centre pot to move to the next 
 | 2 | Time | Reverse | Tone |
 | 3 | Mix | Input | Tempo |
 
-That is all Wake takes over: the three pot turns and the centre-pot push. Everything else on the NT keeps its usual job: the four buttons under the screen (Menu, Params, Help, Shift), the left pot push (back to the overview), the right pot push (jump to the knob) and the encoders.
+Two quick performance tools sit on the pot pushes, named at the top of the screen:
 
-**Becalm** and **Clear** are ordinary parameters on the Wake page. Set them from the parameter list, or map a gate, button or sequencer output to them in Mappings. The word BECALM shows at the top left of the screen while it is on, and CLEAR flashes at the top right when the repeats are emptied.
+- **Push the left pot: Becalm**, on and off. The label at the top left reads BECALM when it is off and BECALM ON, bright, while it holds.
+- **Push the right pot: Clear.** It is momentary: the repeats empty and the CLEAR label at the top right lights for a moment.
+
+Both are also ordinary parameters on the Wake page, so you can set them from the parameter list or map a gate, button or sequencer output to them in Mappings.
+
+Three other controls are switched off on this screen so they can't change a parameter you can't see: both encoders (turning them) and the right encoder push. Press button 2 (Params) to go to the parameter list, where they work as usual. The ways out are always the NT's own: the four buttons under the screen (Menu, Params, Help, Shift) and the left encoder push (back to the overview).
 
 > **Pots after a bank change:** the firmware holds each pot until you turn it past the value it already has, so a bank change never makes a parameter jump.
 
@@ -69,6 +74,8 @@ Steady at zero. The lower half brings in a slow sine wobble of the delay time, d
 ### Where the tempo comes from
 
 Choose a bus for **Clock input** (on the Clock page) and Wake sets the tempo from the spacing of the pulses, a clock or a gate going up through about 2 V. **Clock PPQN** says how many pulses make a beat (1, 2, 4 or 24, default 4). With **Clock input** set to None, the **Tempo** parameter sets it, from 20 to 300 BPM (default 120). If a clock stops for four seconds, Wake falls back to Tempo. A clock with jitter in it makes the delay time wobble a little: that is the clock.
+
+Wake can also follow **MIDI clock**. Turn **MIDI clock** On (Clock page) and Wake takes its tempo from the NT's MIDI clock, at the standard 24 ticks per beat, whether it comes from an external source or from an algorithm on the NT that sends MIDI clock. MIDI stop hands the tempo back, and so does four seconds without a tick. When MIDI clock is On and ticking it wins; otherwise the Clock input bus is used, and otherwise the Tempo parameter.
 
 ### Long steps fold down
 
@@ -121,8 +128,8 @@ Times shown are at 120 BPM, before any fold-down.
 | Tone | 0–100% | How bright each repeat stays: left for dark, right for open. A low-pass inside the loop, applied again on every pass, so the tail gets duller as it trails. 100% leaves the top open (about 16 kHz), the default 70% is about 7 kHz, and 0% is about 1 kHz. |
 | Input | 0–100% | Level into the delay. 50% (the default) is unity and 100% is double. The dry signal is never touched, so Input only changes how loud the repeats are. |
 | Mix | 0–100% | Equal-power dry/wet. 100% is the classic send-return wash. |
-| Becalm | Off / On | A becalmed ship stops dead. The current repeats hold and loop, and new input is shut out. It eases in over about a tenth of a second without a click, and the held loop is an exact copy of itself, so it neither decays nor gets noisier, however long you hold it. While held, Drift still moves the frozen loop and turning it back down returns the loop exactly as it was. Time stays where it was, and Mix and Wet level still work. Set it from the parameter list, or map a gate to it. |
-| Clear | trigger | Empties the repeats. The wet signal fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched, and nothing is left to return later, even if you lengthen Time. It also empties a becalmed loop. Set it to Clear from the parameter list, or map a gate to it: a rising edge clears. |
+| Becalm | Off / On | A becalmed ship stops dead. The current repeats hold and loop, and new input is shut out. It eases in over about a tenth of a second without a click, and the held loop is an exact copy of itself, so it neither decays nor gets noisier, however long you hold it. While held, Drift still moves the frozen loop and turning it back down returns the loop exactly as it was. Time stays where it was, and Mix and Wet level still work. Push the left pot, set it from the parameter list, or map a gate to it. |
+| Clear | trigger | Empties the repeats. The wet signal fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched, and nothing is left to return later, even if you lengthen Time. It also empties a becalmed loop. Push the right pot, set it to Clear from the parameter list, or map a gate to it: a rising edge clears. |
 | Wet level | 0 to +12 dB | Make-up gain on the wet path, after the delay and before the mix. Pull Input back for headroom, then push the repeats back up here. At 0 dB (the default) the repeats are exactly as they are without it. Parameter only: it has no pot. |
 
 ## All parameters
@@ -146,6 +153,7 @@ On the Params screen, Wake has three pages. Every parameter can be mapped to CV,
 | Clock | Tempo | 20–300 BPM | 120 |
 | Clock | Clock input | None, or a bus | None |
 | Clock | Clock PPQN | 1 / 2 / 4 / 24 | 4 |
+| Clock | MIDI clock | Off / On | Off |
 | Routing | Left input, Right input | bus | 1, None |
 | Routing | Left output, Right output (and modes) | bus, Add / Replace | 13, 14, Replace |
 
@@ -173,11 +181,15 @@ That is the tape glide. Change it slowly, or set **Time change** to Crossfade fo
 
 **The Tempo pot does nothing.**
 
-A clock is set on Clock input and it takes over. Set Clock input to None, or stop the clock for four seconds. If the tempo is a multiple or fraction of what you expect, check Clock PPQN.
+A clock is set on Clock input, or MIDI clock is On and ticking, and it takes over. Set Clock input to None, or stop the clock for four seconds. If the tempo is a multiple or fraction of what you expect, check Clock PPQN.
 
-**Where are Becalm and Clear on the pots?**
+**Where are Becalm and Clear?**
 
-They are parameters, not pot controls. Wake only takes the three pot turns and the centre push, so the buttons and the left and right pot pushes keep their normal jobs. Find Becalm and Clear on the Wake page of the parameter list, or map a gate to them.
+On the pot pushes: left pot push is Becalm, right pot push is Clear. They are also on the Wake page of the parameter list (button 2), and you can map a gate to either.
+
+**The encoders do nothing on Wake's screen.**
+
+On purpose: on this screen they would edit a parameter hidden behind the picture. Press button 2 (Params) for the parameter list, where they work as usual.
 
 **The trail at full Distance won't die.**
 
