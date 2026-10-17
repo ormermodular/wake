@@ -28,7 +28,7 @@ The three pots work in three **banks**. Push the centre pot to move to the next 
 | 2 | Time | Reverse | Tone |
 | 3 | Mix | Input | Tempo |
 
-That is all Wake takes over: the three pot turns and the centre-pot push. Everything else on the NT keeps its usual job: the four buttons under the screen (Menu, Params, Help, Shift), the left pot push (back to the overview), the right pot push (jump to the knob) and the encoders.
+On Wake's screen the pots do the work, and four other controls are switched off so they can't change a parameter you can't see: both encoders (turning them), the right encoder push and the right pot push. Press button 2 (Params) to go to the parameter list, where they work as usual. The ways out are always the NT's own: the four buttons under the screen (Menu, Params, Help, Shift), the left pot push and the left encoder push (both back to the overview).
 
 **Becalm** and **Clear** are ordinary parameters on the Wake page. Set them from the parameter list, or map a gate, button or sequencer output to them in Mappings. The word BECALM shows at the top left of the screen while it is on, and CLEAR flashes at the top right when the repeats are emptied.
 
@@ -180,7 +180,11 @@ A clock is set on Clock input, or MIDI clock is On and ticking, and it takes ove
 
 **Where are Becalm and Clear on the pots?**
 
-They are parameters, not pot controls. Wake only takes the three pot turns and the centre push, so the buttons and the left and right pot pushes keep their normal jobs. Find Becalm and Clear on the Wake page of the parameter list, or map a gate to them.
+They are parameters, not pot controls. Wake's screen uses the three pots and the centre push. Find Becalm and Clear on the Wake page of the parameter list (button 2), or map a gate to them.
+
+**The encoders and the right pot push do nothing on Wake's screen.**
+
+On purpose: on this screen they would edit a parameter hidden behind the picture. Press button 2 (Params) for the parameter list, where they work as usual.
 
 **The trail at full Distance won't die.**
 
