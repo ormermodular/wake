@@ -28,9 +28,14 @@ The three pots work in three **banks**. Push the centre pot to move to the next 
 | 2 | Time | Reverse | Tone |
 | 3 | Mix | Input | Tempo |
 
-On Wake's screen the pots do the work, and four other controls are switched off so they can't change a parameter you can't see: both encoders (turning them), the right encoder push and the right pot push. Press button 2 (Params) to go to the parameter list, where they work as usual. The ways out are always the NT's own: the four buttons under the screen (Menu, Params, Help, Shift), the left pot push and the left encoder push (both back to the overview).
+Two quick performance tools sit on the pot pushes, named at the top of the screen:
 
-**Becalm** and **Clear** are ordinary parameters on the Wake page. Set them from the parameter list, or map a gate, button or sequencer output to them in Mappings. The word BECALM shows at the top left of the screen while it is on, and CLEAR flashes at the top right when the repeats are emptied.
+- **Push the left pot: Becalm**, on and off. The label at the top left reads BECALM when it is off and BECALM ON, bright, while it holds.
+- **Push the right pot: Clear.** It is momentary: the repeats empty and the CLEAR label at the top right lights for a moment.
+
+Both are also ordinary parameters on the Wake page, so you can set them from the parameter list or map a gate, button or sequencer output to them in Mappings.
+
+Three other controls are switched off on this screen so they can't change a parameter you can't see: both encoders (turning them) and the right encoder push. Press button 2 (Params) to go to the parameter list, where they work as usual. The ways out are always the NT's own: the four buttons under the screen (Menu, Params, Help, Shift) and the left encoder push (back to the overview).
 
 > **Pots after a bank change:** the firmware holds each pot until you turn it past the value it already has, so a bank change never makes a parameter jump.
 
@@ -123,8 +128,8 @@ Times shown are at 120 BPM, before any fold-down.
 | Tone | 0–100% | How bright each repeat stays: left for dark, right for open. A low-pass inside the loop, applied again on every pass, so the tail gets duller as it trails. 100% leaves the top open (about 16 kHz), the default 70% is about 7 kHz, and 0% is about 1 kHz. |
 | Input | 0–100% | Level into the delay. 50% (the default) is unity and 100% is double. The dry signal is never touched, so Input only changes how loud the repeats are. |
 | Mix | 0–100% | Equal-power dry/wet. 100% is the classic send-return wash. |
-| Becalm | Off / On | A becalmed ship stops dead. The current repeats hold and loop, and new input is shut out. It eases in over about a tenth of a second without a click, and the held loop is an exact copy of itself, so it neither decays nor gets noisier, however long you hold it. While held, Drift still moves the frozen loop and turning it back down returns the loop exactly as it was. Time stays where it was, and Mix and Wet level still work. Set it from the parameter list, or map a gate to it. |
-| Clear | trigger | Empties the repeats. The wet signal fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched, and nothing is left to return later, even if you lengthen Time. It also empties a becalmed loop. Set it to Clear from the parameter list, or map a gate to it: a rising edge clears. |
+| Becalm | Off / On | A becalmed ship stops dead. The current repeats hold and loop, and new input is shut out. It eases in over about a tenth of a second without a click, and the held loop is an exact copy of itself, so it neither decays nor gets noisier, however long you hold it. While held, Drift still moves the frozen loop and turning it back down returns the loop exactly as it was. Time stays where it was, and Mix and Wet level still work. Push the left pot, set it from the parameter list, or map a gate to it. |
+| Clear | trigger | Empties the repeats. The wet signal fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched, and nothing is left to return later, even if you lengthen Time. It also empties a becalmed loop. Push the right pot, set it to Clear from the parameter list, or map a gate to it: a rising edge clears. |
 | Wet level | 0 to +12 dB | Make-up gain on the wet path, after the delay and before the mix. Pull Input back for headroom, then push the repeats back up here. At 0 dB (the default) the repeats are exactly as they are without it. Parameter only: it has no pot. |
 
 ## All parameters
@@ -178,11 +183,11 @@ That is the tape glide. Change it slowly, or set **Time change** to Crossfade fo
 
 A clock is set on Clock input, or MIDI clock is On and ticking, and it takes over. Set Clock input to None, or stop the clock for four seconds. If the tempo is a multiple or fraction of what you expect, check Clock PPQN.
 
-**Where are Becalm and Clear on the pots?**
+**Where are Becalm and Clear?**
 
-They are parameters, not pot controls. Wake's screen uses the three pots and the centre push. Find Becalm and Clear on the Wake page of the parameter list (button 2), or map a gate to them.
+On the pot pushes: left pot push is Becalm, right pot push is Clear. They are also on the Wake page of the parameter list (button 2), and you can map a gate to either.
 
-**The encoders and the right pot push do nothing on Wake's screen.**
+**The encoders do nothing on Wake's screen.**
 
 On purpose: on this screen they would edit a parameter hidden behind the picture. Press button 2 (Params) for the parameter list, where they work as usual.
 
