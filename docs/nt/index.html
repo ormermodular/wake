@@ -1,332 +1,226 @@
 <!doctype html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Wake NT Manual</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wake disting NT Manual</title>
 <style>
-  /* Single look, the Ormer Modular manual house style: night-sea blue-grey with the lamp amber.
-     Layout: one centred column; the interactive panel is the hero. */
+
   :root{
-    --bg:#0b1119; --panel:#1c242e; --panel-edge:#39424e; --card:#141b24; --rule:#2c3641;
-    --ink:#c9d9e6; --strong:#e8eef5; --muted:#84939f; --accent:#e2a24a;
+    --bg:#0b1119; --panel:#1c242e; --panel-edge:#39424e;
+    --ink:#c9d9e6; --muted:#84939f; --accent:#e2a24a;
+    --oled:#04070b; --glow:rgba(140,190,255,.13);
     --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
     color-scheme:dark;
   }
   *{box-sizing:border-box}
-  body{background:var(--bg);color:var(--ink);font-family:var(--mono);margin:0;padding-block:40px 90px;padding-inline:20px}
+  body{background:var(--bg);color:var(--ink);font-family:var(--mono);margin:0;padding:40px 20px 90px}
   .wrap{max-width:840px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
   .eyebrow{color:var(--accent);font-size:11px;letter-spacing:.22em;text-transform:uppercase}
   h1{font-size:30px;font-weight:700;color:#eef2f6;margin:10px 0 4px;letter-spacing:.14em;text-wrap:balance}
   .vstamp{color:var(--muted);font-size:11px;letter-spacing:.14em;margin:0 0 10px}
   .lede{color:var(--muted);font-size:13.5px;line-height:1.7;max-width:64ch;margin:0}
   .lede b{color:var(--ink)}
-  h2{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0 0 16px;font-weight:600;text-wrap:balance}
-  h3{font-size:13px;color:var(--strong);margin:22px 0 8px;font-weight:700;letter-spacing:.02em}
+  h2{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0 0 16px;font-weight:600}
+  h3{font-size:13px;color:#e8eef5;margin:22px 0 8px;font-weight:700;letter-spacing:.02em}
   section>h3:first-of-type{margin-top:0}
   p{font-size:12.5px;line-height:1.75;color:var(--muted);margin:0 0 10px;max-width:70ch}
-  p b,li b,dd b{color:var(--ink)}
-  p code,li code,td code,dd code{color:var(--accent);background:rgba(226,162,74,.08);padding:0 4px;border-radius:3px;font-size:.95em}
+  p b,li b{color:var(--ink)}
+  p code,li code,td code{color:var(--accent);background:rgba(226,162,74,.08);padding:0 4px;border-radius:3px;font-size:.95em}
   ul,ol{margin:0 0 10px;padding-left:20px;display:flex;flex-direction:column;gap:7px}
-  li{font-size:12.5px;line-height:1.7;color:var(--muted);min-width:0}
+  li{font-size:12.5px;line-height:1.7;color:var(--muted)}
   li::marker{color:var(--accent)}
   a{color:var(--accent)}
-  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
   .toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
   .toc a{color:var(--ink);text-decoration:none;font-size:10.5px;letter-spacing:.08em;
-    border:1px solid var(--panel-edge);border-radius:999px;padding:5px 12px;background:var(--card)}
+    border:1px solid var(--panel-edge);border-radius:999px;padding:5px 12px;background:#141b24}
   .toc a:hover,.toc a:focus-visible{border-color:var(--accent);color:var(--accent);outline:none}
 
-  /* interactive panel */
-  .stage{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:28px;align-items:start}
-  @media (max-width:700px){.stage{grid-template-columns:minmax(0,1fr)}}
-  .figcol{display:flex;flex-direction:column;gap:12px;max-width:360px;width:100%;margin-inline:auto}
-  .seg{display:flex;gap:0;border:1px solid var(--panel-edge);border-radius:999px;overflow:hidden;align-self:flex-start}
-  .seg button{font:inherit;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:6px 14px;
-    background:var(--card);color:var(--muted);border:0;cursor:pointer}
-  .seg button+button{border-left:1px solid var(--panel-edge)}
-  .seg button[aria-pressed="true"]{background:var(--accent);color:#1a1206;font-weight:700}
-  .fig{position:relative;border-radius:6px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.5);
-    aspect-ratio:960/1518;background:#171717}
-  .fig img{display:block;width:100%;height:100%}
-  [hidden]{display:none!important}
-  .hs{position:absolute;transform:translate(-50%,-50%);aspect-ratio:1;border-radius:50%;padding:0;
-    border:2px solid transparent;background:transparent;cursor:pointer}
-  .hs:hover{border-color:rgba(226,162,74,.55)}
-  .hs[aria-pressed="true"]{border-color:var(--accent);background:rgba(226,162,74,.16)}
-  .hs.rect{border-radius:4px;aspect-ratio:auto;transform:none}
-  .info{border:1px solid var(--panel-edge);border-radius:10px;background:var(--card);padding:18px 20px;min-height:12em}
-  .info .kind{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
-  .info h3{margin:0 0 10px;font-size:16px;letter-spacing:.1em}
-  .info p{font-size:12.5px}
-  .hint{font-size:11px;color:var(--muted);margin-top:10px}
+  .panel{background:linear-gradient(180deg,#232b35,#1a212a);border:1px solid var(--panel-edge);
+    border-radius:12px;padding:22px 26px 24px;position:relative;
+    box-shadow:0 20px 50px rgba(0,0,0,.45)}
+  .screw{position:absolute;width:8px;height:8px;border-radius:50%;background:#0f141b;border:1px solid #444f5c}
+  .screw.tl{top:10px;left:10px}.screw.tr{top:10px;right:10px}
+  .screw.bl{bottom:10px;left:10px}.screw.br{bottom:10px;right:10px}
+  .screenframe{background:#0e141c;border:1px solid #05080c;border-radius:6px;padding:10px;
+    box-shadow:inset 0 2px 10px rgba(0,0,0,.8), 0 0 34px var(--glow)}
+  canvas{display:block;width:100%;image-rendering:pixelated;background:var(--oled)}
+  canvas.screen{aspect-ratio:4/1}
+  .cap{font-size:11.5px;color:var(--muted);line-height:1.65;margin-top:10px;max-width:70ch}
+  .cap b{color:var(--ink)}
+  .potrow{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:16px}
+  @media (max-width:560px){.potrow{grid-template-columns:1fr}}
+  .potrow label{display:flex;flex-direction:column;gap:6px;font-size:10.5px;letter-spacing:.16em;
+    color:var(--accent);text-transform:uppercase}
+  .potrow input[type=range]{width:100%;accent-color:var(--accent)}
 
   table{border-collapse:collapse;width:100%;font-size:12px}
   th{color:var(--muted);font-weight:600;text-align:left;font-size:10px;text-transform:uppercase;
-    letter-spacing:.14em;padding:8px 12px;border-bottom:1px solid var(--rule)}
-  td{padding:8px 12px;border-bottom:1px solid var(--panel);vertical-align:top;line-height:1.6;color:var(--muted)}
-  td:first-child{color:var(--strong);font-weight:700;white-space:nowrap}
+    letter-spacing:.14em;padding:8px 12px;border-bottom:1px solid #2c3641}
+  td{padding:8px 12px;border-bottom:1px solid #1c242e;vertical-align:top;line-height:1.6;color:var(--muted)}
+  td:first-child{color:#e8eef5;font-weight:700;white-space:nowrap}
   td:nth-child(2){color:var(--accent);white-space:nowrap}
   .tablewrap{overflow-x:auto}
   .wide td:nth-child(2){white-space:normal}
 
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px}
-  .card{border:1px solid var(--panel-edge);border-radius:10px;background:var(--card);padding:16px 18px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .card{border:1px solid var(--panel-edge);border-radius:10px;background:#141b24;padding:16px 18px}
   .card h4{margin:0 0 8px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600}
   .card p{margin:0;font-size:12px}
-  .card .set{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);
+  .card .set{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed #2c3641;
     font-size:11px;color:#a9b4c0;line-height:1.8}
   .card .set b{color:var(--accent);font-weight:600}
 
   .note{border:1px solid var(--panel-edge);border-left:3px solid var(--accent);border-radius:8px;
-    background:var(--card);padding:12px 16px;font-size:12px;color:var(--muted);line-height:1.7;max-width:none}
+    background:#141b24;padding:12px 16px;font-size:12px;color:var(--muted);line-height:1.7;max-width:none}
   .note b{color:var(--ink)}
 
+  .pages{display:flex;flex-direction:column;margin:18px 0 6px}
+  .pagecard{border:1px solid var(--panel-edge);border-radius:10px;background:#141b24;padding:16px 20px 16px}
+  .pagehead{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+  .pageno{color:var(--accent);font-size:10px;letter-spacing:.2em;border:1px solid var(--accent);
+    border-radius:3px;padding:2px 7px;white-space:nowrap}
+  .pagename{color:#e8eef5;font-weight:700;font-size:13px}
+  .pagewhat{color:var(--muted);font-size:11.5px;margin-left:auto;text-align:right}
+  .potline{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .potviz{display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center;
+    border-top:1px dashed #2c3641;padding-top:12px}
+  .potdot{width:30px;height:30px;border-radius:50%;border:2px solid var(--muted);position:relative;flex:none}
+  .potdot::after{content:"";position:absolute;left:50%;top:2px;width:2px;height:9px;
+    background:var(--muted);transform:translateX(-50%)}
+  .potdot.push{border-color:var(--accent)}
+  .potdot.push::after{background:var(--accent)}
+  .potviz b{color:#e8eef5;font-size:12px;letter-spacing:.08em}
+  .potviz small{color:var(--muted);font-size:10.5px;line-height:1.5}
+  .potviz .pushhint{color:var(--accent);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase}
+  .pagearrow{display:flex;align-items:center;gap:10px;color:var(--accent);
+    font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:6px 0}
+  .pagearrow::before{content:"";width:2px;height:18px;background:var(--panel-edge);margin-left:34px}
+
   .flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0 14px}
-  .flow span{border:1px solid var(--panel-edge);background:var(--card);border-radius:6px;
+  .flow span{border:1px solid var(--panel-edge);background:#141b24;border-radius:6px;
     padding:5px 10px;font-size:10.5px;letter-spacing:.08em;color:var(--ink)}
   .flow em{color:var(--accent);font-style:normal;font-size:11px}
 
-  .qa dt{font-size:12.5px;color:var(--strong);font-weight:700;margin-top:14px}
+  .qa dt{font-size:12.5px;color:#e8eef5;font-weight:700;margin-top:14px}
   .qa dt:first-child{margin-top:0}
   .qa dd{margin:4px 0 0;font-size:12.5px;line-height:1.7;color:var(--muted)}
 
-  footer{border-top:1px solid var(--panel);padding-top:22px;text-align:center}
+  footer{border-top:1px solid #1c242e;padding-top:22px;text-align:center}
   footer p{max-width:none;margin:0 0 6px}
   .fin{color:var(--accent);letter-spacing:.3em;font-size:10px;text-transform:uppercase}
 
-  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:18px}
-  .steps table td:first-child{white-space:nowrap}
-  .steps td:nth-child(3),.steps td:nth-child(4){color:var(--muted);white-space:nowrap}
+  .ctlrow{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:16px}
+  @media (max-width:560px){.ctlrow{grid-template-columns:1fr}}
+  .ctlrow label{display:flex;flex-direction:column;gap:6px;font-size:10.5px;letter-spacing:.16em;color:var(--accent);text-transform:uppercase}
+  .ctlrow input[type=range]{width:100%;accent-color:var(--accent)}
+  .seg{display:flex;gap:0;border:1px solid var(--panel-edge);border-radius:999px;overflow:hidden;margin-top:14px;width:max-content;max-width:100%;flex-wrap:wrap}
+  .seg button{font:inherit;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:6px 14px;background:#141b24;color:var(--muted);border:0;cursor:pointer}
+  .seg button+button{border-left:1px solid var(--panel-edge)}
+  .seg button[aria-pressed="true"]{background:var(--accent);color:#1a1206;font-weight:700}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .pagearrow{display:flex;align-items:center;gap:10px;color:var(--accent);font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:6px 0}
+  .pagearrow::before{content:"";width:2px;height:18px;background:var(--panel-edge);margin-left:34px}
+  .params td:nth-child(2),.params td:nth-child(3),.params td:nth-child(4){white-space:normal;color:var(--ink)}
+  .params td:nth-child(5){color:var(--muted)}
+  .steps{display:flex;flex-wrap:wrap;gap:24px}.steps .tablewrap{flex:1 1 280px}
 </style>
+</head>
+<body>
 <div class="wrap">
 
   <header>
     <div class="eyebrow">Ormer Modular · made in Guernsey</div>
     <h1>WAKE</h1>
-    <p class="vstamp">USER MANUAL · DISTING NT · v1.0.0</p>
-    <p class="lede">Wake is a stereo delay for long, deep trails, for the Expert Sleepers disting NT.
-    Every echo behaves like the wake behind a ship: it <b>spreads out, fades, darkens and drifts</b>
-    as it trails away, and some of them stutter. Three controls do most of the work.
-    <b>Distance</b> is how long the trail lasts and how wide it spreads, <b>Chop</b> is how much the
-    repeats stutter, <b>Drift</b> is how far the pitch wanders. <b>Time</b> picks a musical division
-    of the tempo, <b>Becalm</b> stops the ship dead, and <b>Clear</b> clears the water. Wake is free.</p>
-    <nav class="toc">
-      <a href="#install">Installing</a><a href="#screen">The screen and the pots</a>
-      <a href="#knobs">The three macros</a><a href="#time">Time and tempo</a>
-      <a href="#more">The other controls</a><a href="#params">All parameters</a>
-      <a href="#routing">Routing</a><a href="#trouble">Troubleshooting</a>
-      <a href="#specs">Specifications</a>
-    </nav>
+    <p class="vstamp">USER MANUAL · EXPERT SLEEPERS DISTING NT · v1.0.0</p>
+    <p class="lede">Wake is a stereo delay for long, deep trails, for the Expert Sleepers disting NT. Every echo behaves like the wake behind a ship: it <b>spreads out, fades, darkens and drifts</b> as it trails away, and some of them stutter. Three controls do most of the work. <b>Distance</b> is how long the trail lasts and how wide it spreads, <b>Chop</b> is how much the repeats stutter, <b>Drift</b> is how far the pitch wanders. <b>Time</b> picks a musical division of the tempo, <b>Becalm</b> stops the ship dead, and <b>Clear</b> clears the water. Wake is free.</p>
+    <nav class="toc"><a href="#screen">The screen</a><a href="#knobs">The three macros</a><a href="#other">Other controls</a><a href="#time">Time and tempo</a><a href="#nt">On the disting NT</a><a href="#trouble">Troubleshooting</a><a href="#specs">Specifications</a></nav>
   </header>
 
-  <section id="install">
-    <h2>Installing</h2>
-    <ol>
-      <li>Download <b>wake-plugin.zip</b> from the Wake releases page and unzip it onto the root of the
-      disting NT's SD card. It puts <code>wake.o</code> in <code>programs/plug-ins/ormermodular/</code>.</li>
-      <li>Put the card back in the NT and restart it.</li>
-      <li>Add an algorithm and choose <b>Wake</b> (it is under Effect and Delay).</li>
-    </ol>
-    <p>Wake needs a disting NT with firmware that lets a plug-in re-seed the pots after a bank change
-    (<b>v1.19</b> or later). On earlier firmware the pots in banks two and three can jump.</p>
-    <p>When you add Wake it asks for one thing, the <b>Max time</b>: how many seconds of delay to reserve
-    in memory, from 5 to 30 (default 10). It cannot be changed afterwards without re-adding the
-    algorithm, and longer takes more memory: about 192 KB per second at 48 kHz, so 30 seconds is about 5.8 MB. The NT has 16 MB in all, shared with everything else in the preset, and it will not add an algorithm if there isn't enough memory left. If that happens, choose a shorter Max time.</p>
-  </section>
-
-  <section id="screen">
-    <h2>The screen and the pots</h2>
-    <div style="max-width:768px;margin:0 0 12px"><img alt="The Wake screen: the boat, with the wake opening out behind it" src="data:image/webp;base64,UklGRh4hAABXRUJQVlA4IBIhAADwngCdASoAA8AAPjEYi0MiIaEUGXzgIAMEtLd+L9yqcYvjxGv0s+3ej/jvVtq/t/9l9ZCv8G/i39Q/vP6+/1P5R+MP0j8ev7Z/0u4M8h+z/pYfsv5LdkjqcfIfrL9e/sn69f3b9w/jD+Zfh1/AP2S9rfwn9A9AL8m/hP9w/pH7X/4X90Oc1zHzBexP+M/vP7j/4/93ftM88/jf5Q+9X4R/o/YA/RD+//mn/cP//8z/y7/Bfnl6b9AD+C/0r/Sf3j8p/o9/SP71/ef9N/wP8D//f+P8jPzX95PcK/oP8e/2X9y/y3/n/z//7/8f3Pf/brA/2x/9xSl0Geox0wzWJGcW28ZC+IPhnkmzLGU2A1lXjkTLW2jyiqMweVcm/XxcCBX5Cxtcm/YyGv4p5qoPQOq+cJ88yJpGzpKL1to4mW4vqBmeSKddQjKhJH8ZgFWF/n1xksNmXoDB/nZNMrlQwrk0C1FVOIrI7q6Or3dX8thmCAKY0wOK32XJMJIxioL3q/j4Q5kuMogbZPXpGnV7HVjrXXHVpvwH+ZoSohI8UFjcD80uMqqh3f6bLx8OY5NEYJtQPUTfsY+v7zrjY/21AhZZUO2+jtnxgEzQ90q1jIdlyVIC/YyHZch5b1fyNK1jIdlwy2ZUtsOyDj5wZ4NoxzUttuc3unYvR/S5sWEOcpv2DG94CcuZtYwMVRBrk34bewZPwng41u9uEafHzgpCAJJMcXbQuFCnHSXnJNKHhaP6QDoRrB95pVybtBmDyrk36/+ndF5LyYo/gQqBe+76+nV5WnXytTAaEtBSSrIRAhartpCQVOnFjTiyumkMsw2g09C/jLr1o2qOJGXZ5K/UkiKtlqzO1jRD/NJxl8Xub3+42tfHXjKGyZ5D2NgryHsUz0l9O+Vb3AHn/JwwQ/MZKN7DjbOC60P0RNYqla8WIUVVESwd47Jt0OEt19+8CewVNiWGlj0ZyhMjEZZkwx3Iox7DSXiAiQf6nC/BnvRHyN1fyTc3q/lsDytyNg8q4L2yUCMliE2fQbP2vJ+prZ2In92zO7sYei16/B6Wxi5TtFB/lSBTp8UJASo7g1YHcfo6YNhHq9g7KtaPPojEFGvfN0HMqPB6N21sO3hRyRmzaN3egNOK1f9OzWRf0F+tr7v5C2X2JpTKQYb+QLSa709tJIpPuVUHf12grhuaREQo2C1hDxBP/PESwI6kD8SjJwWnolPtDEGoLFdjwxyHUWEHqmQ+9EYU2lTNy8RQO4JXnMrnHQzKOJevi8UTj8kppo7URyX1SpwdlzdX7TaO38hjrcOzegPT6QNB+UZTe8u7luA2E4zwStcC1vDcWatw/4wT3W7TKO1i29V06v6lX6TrorhoWp4mzqJ5EVo3nOjvKlqj/6Pbe34lkzg+Ft8zrtZvFMdUM1FuNaPfY3N8bjixESFXeDNvLig1WT75I17l6jpS3W4PWAU8chKkEspjgwCNYm0RD1E9at0cV5cIMUB5FEl6XNApYd5fBBR9hU4HUj3dW2Ix/WS3oiQj1KtmhKUZrglxiP4uDLFUAzKWO0ereh+OjPWM7R8FmE+3iYPmFZrzcUHI43IKdmGaEMwq4T2jSaw4d/7OAWVH3HRhTDhrSfFl6ewBSHfshMjKaLe53R/h2Ng8q3v6sNT3zd5l98jvmGHxUbzm42DyxOb7q0fJZU5zUV/jwIDDnYQKhQeB1pxSwAD+8WLB0j/QPBwRFP5rcKBms1M9XVfvW4xcKrf7knENi5xiBwVGPm/jVIolQ28hg4n21JQEYIFuGmUSyQLqhR5P77jgnj5ThT2bA+4RdlcYE8LBZnKIWr3I6S8p10yWPBPHymBylidhffF6FbqjvHH1JlDuhcGJ3UtHVJFFp/UT5ivE+B1HsQYI96GDTGb3tOiV1Tm1wCt9ASLQX2xYJNo6RCAkvSq8CNIMDdqNP9NbcJSAWoDovYuGxoyYTLe+Xxm6pbs3QgH7lvbdpq3pMDIeN4si4iCs2od3ctV9gxv8QHUAsSVv+EMpdrrQwkUn4AhbXzr+6ldbIW0HEo73QVdTtb306Qo0QCWrrvUDsH7k0uZ9iq6Ek3Pcy6K6fzICYfnyRilnsny4OFnKDZMSovWhgZmJCXsWxVQDRWVLE6jYT9BSycqxQHGyngzcxVyuHffH3P7fgUPL+Ye9qRYuQ88lXvTIj81TwqwaLCPFoQ55UaqsACyHkSNRZ/2G2cPrCt8kKZ3pcGWZ/zIKk3putTmdyJlGT35cs6oe2CTY/q3I3KrrAiiYGUSsuWPD0oiagzThTn11+6KhAT6eYrO/mhzUQ47hnVVfq+L34nj42MBhlNzVbFjiK98AJNViK3cmDak4hwJRAr8JKeO98zFmKE6ckaYx1jQHC8EQVBDC8SNft6D/w63KKFjNLKEk9vyo0zXsX2JXF+3KDr56WTOcIxRpJKBBjHD2KUo6RSwTjwlpDwlM7W9knCiLIkqWQdLZzDUFeKkW8uNuIjspgCVGg+/IWMl2OGPsKlOgkrTeEVTle2CxH3nz9hS9HPCwNWk7j13KC87X6shON0UanMoVYG1VAKAJodZa85d2sLzMB9rIvgpY5Cz3t9zpV28h/oqw1AsimzbBD3E182SrewnP8tGzvxUxEazHobN+4r0kHpmPYv9YbCWy/vv423WeYdDN3lLP3WWlJFsPGB49Wd9ycNgYlACLdi1fTB8jgFaAewTVdjjWuK+sDMB6COmnxdATzohn89bZp+l1T9L1+eRy5kgKF8kRT0ETuyyg3Y4O6oyV3LS8isWafC258mQ3tzVW505wR/Hnqi+3uhoTOUZJ2mXkMu9zrQqIc1B7IboXCGapZ8k1rh8oDmOANrE1do35UwJXgwZmivzOeyEuVeSx+oshK155RtD9fGcXAlvl7dqrLIptM6jg2l4kksR6wbXMNKGD7HzJKd0CfH0iM6/chlgUkcbmE8i6j2Sz/P+p+Yi/KXHB6WNJP2OS6xpl0D6ySYmSf+PKUPkR0e9/P+gTr4LIbzwM4XmWTqr1iSgKzSy5rX4lVuKqxtCo7gyBo+Im8kTztRmbpsEOUrc+5uS9zWWYzL9etKFl2amWIsnvfjT0Mq72FY/Vms0RwD5aLycG9CZKpLIJiAy/CX2+S2cj5HfGFumoOxDEUma7pMWWvoyOe/sWVLeHudQqJFzqAbnKqYvR2NQDQ/I3/7eb9nagpgLif3kT+tFPDlUV2voO2tKHSlu7YLbHSPOIvY+iARl5yjK+C2UBF+JYST1qmhQlYOjFJWlQosYhfRiGNZHcGQNBAV7P8/6n5iLoGPKBo2rFGcfJ0tEB/baQcPCtALu3Sc1ZLC9B9yRbsZsmAmKJnsQy69Sa1qXGslERgR8O6OClKOq1GgECbdXmh7KQgXUFqGJJifz70ZVBSiu6F4iPePsft9cnDSDb3Qqg/EO78KM3Zdk2kBw8tN6zYMVIS5WR5dAy0df265N8tvh8WCxZQRfHAXQOn1Xkon+ZZw+Bqrif4xgSk4FLOEddrDPAb0ecrUeQVoiIAwjKIJjPxRrsGECLlYfHnrdREsOsQN0wGzUyMyZlDTXFmP8HiRAoGEKgpTvFaAA6oNcHmOhCocrDgwuwKqcOhaYSVt2/j1uV3HNL89ZeohUt2kQgBR5B85hS7xUCLTOwBTZ7DPxUJl0FAd4qurEbllmnpz+12S1REGQvPJoXOh4v5U3I8mfJeOXl33q4SST5OV//eG26FJ6ST4KfzUjZQSK2LRFedRI0Zf6a0r+AO1tT6Q4vzzjtWhDlXH3EnHp3QDmJARzrkOEIXtvspRci6P6qM25vgathBmWhndVRdP6hXTriQXQ+FYKaqxhrJW3gYhYmLSeDPSS28LPO3ACnxQ7J2O0HF5qG6b8pPw/V37VMxX8N3+C7vj3MRyrc3qt8Df1TvyP0uh9zm9zTTO5rwQbIflo38Bd3SCEcH3X/2trYyU7slt98nR7bgGRma/7a/84OQu9QDHl8Jxhhq+jPPiIm2sTDC4iz/WjsTfQDjdPCrp02x9mD99rlTtsyQ5Lg8eehVmZvGU+cS0WHVwVoxMUI37ZLJ5GpBTjwiYYoUiLMBOzWg5dms/TAcnB79eXOCTlwmsjpJo/u9OJX7YBuE2Qqat+ZqqHiJnZERP6A6qsOVF9T50p6ntFeMkcOD3J6kSSrEMPrJJsozkDHYJxzlNL0GwQAHnbfoGcxK2VoR5hH/q3PYC67NIfxOa8U/RVuGpgmz7WBVdH1d33/M45kDcFiT3HiMcakBPSN9/BpUTKQMF5d1rKByWumSPP1bnsRQ+2A7R7o3aOYjvG80VuFD1GrD1mZiGwvh2juZlZ6ckJOZU9ddQMhGPt0d/YiBMzfCealU05YRplsACMdKGO/lsuJFfmzgN/ToGl99hhukdAiW9ezu5VZpViiTR/hQ27y/5YI5Y02WqE7ZXrqt+MEz+hgWQwA3bSzOZX89613W1LlvD5QMr0I7rp6l2SbrJhwnd0ESGcmWZzZVHJnJLC5X9E0OuJbx6keTbngLyBwlgpj2ZBthmlvV5niaRahfT4PoXRP7Ncu41J1OdrhXqZGQYZK202r0S4+ryCK72QV9jiwyS4Rzf7TxGe+ilQNYNAFRoQwSdfjxwp4A7ihNEe1gFFd9qDYX4sO11bTAxTFk2wMUMrVM0zJ1LlAvSX/36ePSS3b5OQswjT51LobvgRFrAOO8XKBo8tInJehXo7HZszVoNy0tkIFX4uXNtBA9ix2TU8hc9V6Ha22nvoc23Wf9Lm95/TCLk4/oLfxj9HeWRU1AmX8lD+9/l5lNTS0k1CriFDKA5T/ZNbFBUlA/kqkkXCqFi21R2aT8X2zKPEAubTEA1z/wDzSlNyhpu0s/F++gWkkrRjGXppTan1qf/ujjwY4AMKTBqNutxqsgNjr37EAI2G79/rndWppkZYB8jE+UqL8B23xoUnPjeFh/BtNON7OxeTr/5iJ8eRHA0CSpdc7UJwpxw1PRV276rD6jWaC5eXqjmx1hia6tkqyN6xKyQQzrBOJ5OatAH2jtqk6zmZUQTUjJeG18uwfpnI8qOekRwBAwicHRpWX/0TGjzS2rEZPvla4KBcyf1n7YoUSBlrApkpENNcWY/weJECgYUDS24ytqh2xQqOAcvUlro5rGR0JtQASibdvP3yfJ8m1xdNkqHNQXnqF2BVThyh8g/OsxQt1PjK1u0iEDCf+M53DBwbhbXVIIy+6POlo8aYZimWWkw72m5kC8FYY7s785+dBCHq3l949huKKhFmKroLgxfEx8KUlOk5nHvCi7ZDKbxTwZGxWkwRX/uorDNNqkOsI+cs0YhxPN67IGuA+Ky85fdnHUN9yB2ZW0vUknSi0dbkIcSmbu9Pz9Pl1e9xxYR+qYkTJfkZuzG2c6WaS64VvrZXq1nPZv4s9T9K+AaxgaGpNn4CPPjMCn/jLk4JqNH2749aHREht6v269IQmK6IqC7Qp5UKwR9a4bQ+uedH0uhDiRRNU8t3Ob7dQoUHiS82lsttZpfv5D7oGTecXrPls+tVu4y0rh1XM7gUjYXG+Ckl1rXxlHamQGgNSot5arHSsAqPBf5zOKynPCmppAWaSsFWl6hUUbXwmS7kL7mp/PzCEHJ3ADdbvp6ofX01yC2Q2ZTQ2DeQVhzBsMRX29IJd8hY1nm21P/wP/hqEqPicXORB6niYI9FrDF/QNNpKPWMJri9dFU0OqJMHgSzmoN00+Dy3Yixpn9nHBDm4nSbFseKJPS4Ar60MiqFARocx4sKFzIiIUoVa6Ff80m55CQY6DfRceFPnBqE/rLedAapUhzHoRqHVYI7wK6K7abXU1X29UDkfjxKOn3nyep2mimd2tdmh4Eoc5BNe6nbsaQs1pWzvJ4AxmGQP0Rgvx1pML0kvLkwJKLcWFeLv8Uy5eEAQbl0Tr99Rhr7e3go+ilc2y5HHOFrpKmPkJkUZ4Rz+Kyf3XdyLbtp/woBFnZu9QsmqTVlgMddishLfeeO3eSCl4EMeA3HvMmjamNI7yZo5pBsNh+vGUCCso0VYoUGV6uO/y6qHtbL+TXR3bhnJOniOTiZTNPM5gLtnoGbf2oQp3knGM/uhGLNs1eX0ChK8DnjAfAgHl6zs2O9CHUkkNzeZmXz+RdByZlimdXmgxEWSvWbAwvGIR3F9p1EyWscmdLIvHsJ1WnAxM0qxzAu30eKqpDbPlkyJDQY7gtS4gTvxIl237UPlnejT4UTRwYLRSdSbTBgZb+evCRUQvHKvbH29NjnCDDIHIWsY78wN6bQpMjtoIoxPTbSDh4VuojBr9ymWNrDJCgxp/KB/bsiC8WQ673Ukw00BvHDGiMiXE/G9o8G0hB03g0U8d5zHmnK9TP5A+KRRglIKDa3gqKdn3I362hw0L5/VI7seEBjtxWyG0vKVdmDrqot1BKSlwS+8yl5Bl9bMZc+6VzFVCgjBwrHkzhXlc1Wy/MofKzeb2jWXK+4YhdfrLWDwayHR5Hubxl3Zbb/uelYE8gc5kAhgN+FSiz5fgeJpFrb41RVAoYhlpC+R+FEm0YAQ+I6W2M7YObidJsWx31K2RItsB3bPNXnXdh+lNvLG2LXBUrTkYCINHEf3Nr2PYAl6bHjf3V/3sCFqCTlOTgE+vLFgbGBKpJuWNOkKvfiT1hjsorH6K3XU0BuRRR4NNAp7HVAt61CdL624kgxi1QZaA2P/yyXDcjvkCgsKWuCjVnXN+AkwdBA8zpKD0gSTRfMUEuHWujN4ZG0ymaI+UtcMLfoAXeqpcGtjipvlwRp3lOgMWsVEnaZClNFJ7pUnMAwE9lB1qcwxXlu7zg6KFEg2YSDpCct7GoxKZD/2HwXKUqYUHmZA0NvZPlXzsgs3xcRw1DobpBJJTG5zJhLb7qZw/Z0Mc5keQy7ECptoT1RT2ZyOHNRRhsFN/8+GPSHP5uRSJBtmVbzGii4PVZxHhQrjjPDurZ41kaURxG1tAxqQWJALkyOFLscS/8yBmS7yBaFjCKBWWuSJu8rog594R55pF9Y9UKYqj3oeEIXs9ate5r64DPx2wp/kDNqXZcKtIISm8vVdm8O2gDyCzsp2l47ob36db/BVSNHNVoWWUkdtzDI53Kx+wqgH7G9i+GwuYaZLKmqMLdCAIipe6zSdGixzQoJA5Q1dOjE9tSDEaRizZXXOitE+W2iTeggfVFxZSXZo49qdCFNPO2/BjNvK+TSxiF9GIY7vxyKWf82AcqeOLOP7ndhm0h96clqpqXHrcruOesQfnWYoVpuesvUnd7LFd2gYoqnbdHMSJQhTO6O/c47DF4LpzNfk2+J70XaiDqr6hhgwRg7uSDJhS/uZZ5I5LYjS53I63dppSPHsVfrsLjd4cJ8XrOphcUEDHlbnLv25RxhEUHpFqRQSd02mAtTWFK2cVSJL4/2Xzl/C7UywIej8gyJv08ahPvTcnl01LBtiQbcELfNdVyIXJr3sO3uLwxJheWfXc0eKGKVPspVVe+V5ybb2wJujei9F3oi7WWNqQ7MgC57lSZ3SvqQ5/DxyWB/JR7sUrfsdDAkrDWSQVt2a/WOtlXN74jr0I7/EH/oyDhx8Twwi7Tnx1/AbEuFBK083B3eKgvZ9BQ1kAQko+eRATuexggL5wXJqk4hxlYmqWT9DeoQhW6zDCyDnUvpkB8vnl9UCt7CrIgQ2U3r2DOVGUJvIrbU3upNYB9iC02Z7ZUkOwXIVZcruKGSHJhfeqKPI0WyfLRkZzpBA26SuXCRL11KV6ZX3eVn7xslmypkZXlVHTm3e2SfU7YWSd+R3wZolAqGAYucrX44n27UzOQniv92j+bjK7Ov+Bg/8n+CMKwMLOSnQaEMy+lcgtyubyO8j/PAqyTV4V3uwk5aNT6bUoyeQua2CbBdffNkELK2qa9CnJdPjUKFCv7KNH4sXpa0k7Dw8FV99JLpKoSP6WNxbL7I0Rc99ML+6sScqlnLrKSs6oryZfGt0b+FNgQD/5DzPhGz5JXTrVA2ViS+iR7bU/ynb9Zf33pj32alEOjN5EWDF13mnZErzB5EymStiOImiGYH3BHr7YekzZrG03tjcJvqvLMY/nynQD+o3PlRJ/AcaPHMG0IdfRnowi+1yc5ZRKcPpY9Sl1M613UzRZ4SpJCqG/cV1wFId6STa3+kHVEYBMYE+W1/jp3C7Qpy1Yu2k3Cgboh0SUn9iAMQ950pr9WLPrw7ePinT//SX3vFAJVvQdFfoStsugVo4M1PIYNrfjcWEvISVNWJ7nHOMhjtsq/7xEJPjmVv67hR8C76bsCo8wlTT1AT+PcwWaJqB4JC2CbMvvmyCF40uRI2nptXieGBpRb/KlIBPH4bF1tIQh3dAtOkzqLxNbUGFpi4OD9DB6zmjXhaK3/7B4qtDlItBzIXrOjmVvEnc5XQbo5emtGMKO8no3b+7qWd54LbkXMYf9uqOXElyYbNh5OW3ZuFxGKrIgOGDGXbyhqo+K6ZZHwzi3pmGaMkWT8N3WQcnMazLpVVtbAZlSCJRYUUZWP8h0mccykb7XbqlOakV/QLLTHyjcuznbuv3QWSGo/5TSMEw4VRQoWfU8Kn5QrHchW5QAMS6zpArw9KoT6TNQHOfMGL7FsJ9mUtHF9c+D4h+oSuOH4xLU/z6DDOrhZSSL0OHeFpk218i/oaZAlgkWPJ8oMGBldGt88WF9j3TKds9kAbJlYn4DYb+YCER8onvN5cpN7PzfIyabyL+1+P8R3IDyvfH6XIFEF/EsIllk0UlZuxtRi9+Mn9IFI2eQeU5IHZEAco1IyZUyGPbKTM/QEM2Q4VqoklFhchjoqhj29acUUZZTA7/WW6bNC/hsgxw1ei//udgMBZlbVRRw4VWLxknMX/watFLU7h+zkKqm8a/qyp6S8DwTjVqUftiIUrFd9ocRimlN7mkjI+yJ0/WRBHORv/irhgiz2yLKyimfw2qHueeyZkkyd9eP9tt5ZGon21mPnEune2VJJCjXw+ZrB0eZdNYxVibqPG0EhggZcQnIXk02hEH9SmULsMf+b999xI0h8uILygfepiuUmVZc9hDKTkO1N1IaIUMKlHoLB4MKs1UsO16KQIJUYturkiIlvO9LTRARN5jBgZXRrfPCCvQqFOrl7OpLQbNfpvd+rJKIVByqqSKHZ1QVB3i2RvqtlZZXPZCYolf1MCAve0H8UqISIMf5QkHCByZiEysqM7f1WWu/iAu31HtqZdIdlJx4CEDLLJmrDG5geX5mWiUsKYusAUioUgnAB8FYYZhkWgy8cvpKgNpCtBj++034CO/3vAKcdraO3sAkBH5WsRIhgFWt95M2N0gLAurexRciqWkaQjuAwOoQV7ZnHplUyh4du2Wr0Ne/IkuRQsCbus7MTpiwXrAU99tKeWBmu9yVjOTtagnAZ+iARYKYMObdIdmbyGWRDZF1PyLS9oDcjW8hwAbhV09Plc7LItpriGE7ZCrauuasJ3yG0RI64bAJ24Z/bTM7Aba9jdlhk3N5Z6anXKr88hUiSPXFmNfcHhkTG90uB7s+8gZqsvTtcLf+GOPMbwtnDQQSUL/TgPChcTTpOhmtnZQI9oirX62JnoO0sGPI9Up6oNIC0naN0vPecJd2oXIcD/7u+BqstPy5M7cSJkY5n0F5/otQsBoeJmwonrQP/z7jBbW6kSbMwbppNh8JT8IE97oym3uHWI0pvTJ3KypWAictNw7VMYlchEvzUQb13IDeP2j3s4NctMs94yLaGWN+dWrqnke67svNzUN4ZjefSFufgQxbJ8tGRnOkFdyafOu6GpYEGqIdZDon/RszLG3eJXzSdjrABDgwFJvMVM3eZuzRfZOtm0g3lebyn0BFXY6uyqOozUThYgjB0+tx1HkulNtppD/2ia4b8intLgsxdjgsl+r6zLTmbn2Y91q/WAsJdI0IkyxXwQ5v2JswHvCsxQHWwPB7DlYS+ibAeHH2vYMFTZ6XFqRUaQYlQ7btNqJyqSnvAD3dnkQq6MwGkGhZf1VHEiokVnIhHtbudhTH5LbKFdwtxKDTje4RK+C2Uq2D1w7D4Med8yLKxJfRI9tqgDyhnm9Bk7zcNcPI3OMfxes0St0LumHrchA8V7X1aVgrzu1+ooZQN+oyjVSASGO7D5zsrjX4vi/ATrFaT5g9tqgE/j2qoTEvNTTpJZ6BuNQOqmhNaR7VUJiXh4D9gs4RwfRntfddkeN/H9A+aX2wxVPbcVlhFn/K1foHQIcOx9uclOgP/hI32vAsUkolWMBu31VGXyGJLD2ALoU7ZKOqvdsTMui3/wz2en+FnujZH6qNJAf6yhAUqnV9jgOs8KKYlyz7VDZ9zG+tL4VFaHKv+4kHFxelOVrNembHMRcgdQjdRhXmBlhR5r/Z+8twypWlcd0K24bjkXZ/Umg6A0I0i7K74ppAbezU9KooWEJaLEZVaUtSmkrkNWDsQCm3aYyIAWO4MAXD2HY3Sbs8B7Tes2ETi+wTFo88RGldfxzgY/2wx24BNuhf7C4rm5XP+TF/RITdN1qMVpPmD22p/aAyP0VT79Y+kIt15jE5GyXY3NYvQQk4WdEver9o50F0obNtWOSA+spr24i2WN+/KMCU2YdKvNFy7rmDohgMXyMFVkN8554jHPGdPjULyrx/0/ghZxTnMUEaKFF6JWKLI6Tt1unVyzlevc+x/WPnXuOBmTu6SUd7qVhCWixGVWgof1FQ9ktio+pcijFYJQblDOv3WB7cwz/XxkweA83DEfd1w0YIEDpN/0BprKuIT1SWsbxklphfyvbwows2CElPwLfFb3qqe15fdnDnq17zV+njUJ96bk8mpFgJ2thOMNjhq4/6ms2AgAFNtsldVtcIqPLKZ1G+vtbZQjMelKwYCnqp6DnEAxzqh7WdnlHVXdYZGXen5pr48O6hdQKxFW6lhj2mwrytNWt1n4vE3CQcMe02FeX0LVuC/pWhRb7ZREVUNpD9FeH9IuSwS6d4jVXsK0TLl5Oxf+1bd2s5rJ+lMv4NMjxUEuJv9nI99DJikMl1POOFnUAsuEPh+xK1PJjTYxM6Sxtl7Y4ld+hU2Sjk9EbAaS/44CQ9lalYI1KlPOeWiYfUH32PiJgNb5YurB8+YNUVb5V72752azZHvFwR/9IfWg8HU2/e02FeVJcIfD9iVqeTEyhF90hjZ4XlSRA56xytoubuoP+bZeR0Mxs+XAUnoe0nizGvxC1dp//us/ms1gIwaYU6+7neEwvSQi/L8iaL53dOzwbjYd9sy7S5ON6sB4Vc+iy0VTVnvufbKZCeHwd/7XC145uu0lIrM4v1LnYl/EowV2AAAA=" style="width:100%;height:auto;aspect-ratio:4/1;position:static;image-rendering:pixelated;display:block;border:1px solid var(--rule);border-radius:6px"></div>
-    <p style="margin-top:12px">A boat sits at the top and its wake opens out beneath it. The wake is the delay,
-    drawn live: it is brighter when the repeats are louder, wider with <b>Distance</b>, broken into pieces
-    with <b>Chop</b>, flipped with <b>Reverse</b>, wobbling with <b>Drift</b> and frozen still while
-    <b>Becalm</b> holds. Along the bottom, three names show what the three pots are doing now, each with a
-    level bar. Three dots in the corner show which of the three banks you are on.</p>
-    <p>The three pots work in three <b>banks</b>. Push the centre pot to move to the next bank:</p>
-    <div class="tablewrap"><table>
-      <tr><th>Bank</th><th>Left pot</th><th>Centre pot</th><th>Right pot</th></tr>
-      <tr><td>1</td><td>Distance</td><td>Chop</td><td>Drift</td></tr>
-      <tr><td>2</td><td>Time</td><td>Reverse</td><td>Tone</td></tr>
-      <tr><td>3</td><td>Mix</td><td>Input</td><td>Tempo</td></tr>
-    </table></div>
-    <p>Two quick performance tools sit on the pot pushes, named at the top of the screen:</p>
-    <ul>
-      <li><b>Push the left pot: Becalm</b>, on and off. The label at the top left reads BECALM when it is
-      off and BECALM ON, bright, while it holds.</li>
-      <li><b>Push the right pot: Clear.</b> It is momentary: the repeats empty and the CLEAR label at the
-      top right lights for a moment.</li>
-    </ul>
-    <p>Both are also ordinary parameters on the Wake page, so you can set them from the parameter list or
-    map a gate, button or sequencer output to them in Mappings.</p>
-    <p>Three other controls are switched off on this screen so they can't change a parameter you can't see:
-    both encoders (turning them) and the right encoder push. Press button 2 (Params) to go to the parameter
-    list, where they work as usual. The ways out are always the NT's own: the four buttons under the screen
-    (Menu, Params, Help, Shift) and the left encoder push (back to the overview).</p>
-    <p class="note"><b>Pots after a bank change:</b> the firmware holds each pot until you turn it
-    past the value it already has, so a bank change never makes a parameter jump.</p>
+  <section class="panel" id="screen">
+    <span class="screw tl"></span><span class="screw tr"></span>
+    <span class="screw bl"></span><span class="screw br"></span>
+    <div class="screenframe"><canvas id="hero" class="screen" width="256" height="64" aria-label="The Wake screen, animated"></canvas></div>
+    <div class="ctlrow"><label>Distance<input type="range" min="0" max="100" value="50" data-pot="dist"></label><label>Chop<input type="range" min="0" max="100" value="0" data-pot="chop"></label><label>Drift<input type="range" min="0" max="100" value="0" data-pot="drift"></label></div>
+    <div class="seg" role="group" aria-label="Live tools">
+      <button type="button" id="btnBecalm" aria-pressed="false">Becalm (left pot push)</button>
+      <button type="button" id="btnClear">Clear (right pot push)</button>
+    </div>
+    <p class="cap">This is the live display, running the same drawing code as the plug-in: a boat on the sea, with its wake opening out behind it. Each chevron is a repeat. They get <b>brighter and last longer</b> as you raise <b>Distance</b>, and the wake opens wider. <b>Chop</b> breaks the chevrons into pieces, some of them looping. <b>Drift</b> rocks the boat, wobbles the wake and speeds the sea. The lantern and the spray follow the actual level of the repeats. <b>Becalm</b> freezes the whole picture, and <b>Clear</b> flashes its label. The three names along the bottom sit above the three pots, each with a level bar, and the three squares at the bottom left show the page. (The labels use plain letters here instead of the NT's own font.)</p>
   </section>
 
   <section id="knobs">
     <h2>The three macros</h2>
-    <p>Under the controls is one stereo delay line with feedback. You never meet its parameters raw.
-    Each macro is <b>one control that moves several things along a single curve</b>.</p>
-    <div class="flow">
-      <span>IN</span><em>→</em><span>INPUT</span><em>→</em><span>DELAY (TIME)</span><em>→</em>
-      <span>TONE</span><em>→</em><span>LOOP (DISTANCE · CHOP · DRIFT)</span><em>→</em>
-      <span>REVERSE</span><em>→</em><span>MIX</span><em>→</em><span>OUT</span>
-    </div>
+    <p>Under the controls is one stereo delay line with feedback. You never meet its parameters raw. Each macro is <b>one control that moves several things along a single curve</b>.</p>
+    <div class="flow"><span>IN</span><em>→</em><span>INPUT</span><em>→</em><span>DELAY (TIME)</span><em>→</em><span>TONE</span><em>→</em><span>LOOP (DISTANCE · CHOP · DRIFT)</span><em>→</em><span>REVERSE</span><em>→</em><span>MIX</span><em>→</em><span>OUT</span></div>
     <h3>Distance: how long the trail lasts, how wide it spreads</h3>
-    <p>Low, you get a few repeats close together. Turn it up and each pass keeps more of the
-    last, so the trail runs longer. At 50% each repeat keeps about 60% of the one before; at
-    95% it keeps about 98%.</p>
-    <p><b>The last few degrees hold.</b> In the final 5% the feedback reaches 100%, so the trail
-    no longer dies: it holds as a bed. A slow leveller sits inside the loop: when sustained sound
-    piles up in a long trail it eases the feedback back smoothly, so the bed stays clean
-    instead of distorting, it never runs away, and a trail can run for minutes. Clear empties it.</p>
-    <p>The same control opens the stereo image. The right side runs a little longer than the left,
-    by up to 1.5% at full, so each repeat lands further from its left twin than the last did,
-    and a mono sound comes apart into stereo as it trails.</p>
+    <p>Low, you get a few repeats close together. Turn it up and each pass keeps more of the last, so the trail runs longer. At 50% each repeat keeps about 60% of the one before; at 95% it keeps about 98%.</p>
+    <p><b>The last few degrees hold.</b> In the final 5% the feedback reaches 100%, so the trail no longer dies: it holds as a bed. A slow leveller sits inside the loop: when sustained sound piles up in a long trail it eases the feedback back smoothly, so the bed stays clean instead of distorting, it never runs away, and a trail can run for minutes. Clear empties it.</p>
+    <p>The same control opens the stereo image. The right side runs a little longer than the left, by up to 1.5% at full, so each repeat lands further from its left twin than the last did, and a mono sound comes apart into stereo as it trails.</p>
     <h3>Chop: repeats that stutter</h3>
-    <p>Each repeat has a chance of being broken into a fragment that repeats: the first half,
-    third, quarter, sixth or eighth of the repeat is looped for the length of that repeat, each
-    grain faded in and out over a few milliseconds. At 0% every repeat plays straight. As you
-    turn it up, more repeats stutter, and the divisions get finer.</p>
-    <p>It changes what you hear, not the trail: the repeats keep circulating underneath, and
-    the pitch never moves. It is purely random, rolled afresh for every repeat. It needs the delay
-    to be at most half the Max time, like Reverse, and it rests while Becalm holds the loop.</p>
+    <p>Each repeat has a chance of being broken into a fragment that repeats: the first half, third, quarter, sixth or eighth of the repeat is looped for the length of that repeat, each grain faded in and out over a few milliseconds. At 0% every repeat plays straight. As you turn it up, more repeats stutter, and the divisions get finer.</p>
+    <p>It changes what you hear, not the trail: the repeats keep circulating underneath, and the pitch never moves. It is purely random, rolled afresh for every repeat. It needs the delay to be at most half the Max time, like Reverse, and it rests while Becalm holds the loop.</p>
     <h3>Drift: how far the pitch wanders</h3>
-    <p>Steady at zero. The lower half brings in a slow sine wobble of the delay time, different on each
-    side, deepest around 45%. From 40% genuine random wander takes over, and from 45% <b>the tape
-    comes in</b>: wow and flutter, a little saturation in the loop and a darker top. At full, pitch
-    moves by up to about 4%, which is under a semitone. It acts on the repeats only, never on the
-    dry signal.</p>
-    <p class="note"><b>Feel:</b> Drift moves settle over a fraction of a second, so the weather
-    changes rather than switches. With Distance high, Drift and Tone together make a trail
-    that wanders and darkens as it goes. That is the idea.</p>
+    <p>Steady at zero. The lower half brings in a slow sine wobble of the delay time, different on each side, deepest around 45%. From 40% genuine random wander takes over, and from 45% <b>the tape comes in</b>: wow and flutter, a little saturation in the loop and a darker top. At full, pitch moves by up to about 4%, which is under a semitone. It acts on the repeats only, never on the dry signal.</p>
+    <p class="note"><b>Feel:</b> Drift moves settle over a fraction of a second, so the weather changes rather than switches. With Distance high, Drift and Tone together make a trail that wanders and darkens as it goes. That is the idea.</p>
+  </section>
+
+  <section id="other">
+    <h2>Other controls</h2>
+    <div class="tablewrap wide"><table><tr><th>Control</th><th>Range</th><th>What it does</th></tr><tr><td>Reverse</td><td>0–100%</td><td>How many repeats are heard backwards. Each repeat is chosen at random, so 50% is a mix of forward and backward. It is heard at the output only: the feedback loop always runs forward. A reversed repeat is the slice just recorded, played backwards, so it arrives one delay time late. It only works while the delay is at most half the Max time; beyond that, repeats stay forward.</td></tr><tr><td>Tone</td><td>0–100%</td><td>How bright each repeat stays: left for dark, right for open. A low-pass inside the loop, applied again on every pass, so the tail gets duller as it trails. 100% leaves the top open (about 16 kHz), the default 70% is about 7 kHz, and 0% is about 1 kHz.</td></tr><tr><td>Input</td><td>0–100%</td><td>Level into the delay. 50% (the default) is unity and 100% is double. The dry signal is never touched, so Input only changes how loud the repeats are.</td></tr><tr><td>Mix</td><td>0–100%</td><td>Equal-power dry/wet. 100% is the classic send-return wash.</td></tr><tr><td>Becalm</td><td>Off / On</td><td>A becalmed ship stops dead. The current repeats hold and loop, and new input is shut out. It eases in over about a tenth of a second without a click, and the held loop is an exact copy of itself, so it neither decays nor gets noisier, however long you hold it. While held, Drift still moves the frozen loop and turning it back down returns the loop exactly as it was. Time stays where it was, and Mix and Wet level still work. <b>Push the left pot</b>, set it from the parameter list, or map a gate to it.</td></tr><tr><td>Clear</td><td>trigger</td><td>Empties the repeats. The wet signal fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched, and nothing is left to return later, even if you lengthen Time. It also empties a becalmed loop. <b>Push the right pot</b>, set it to Clear from the parameter list, or map a gate to it: a rising edge clears.</td></tr><tr><td>Wet level</td><td>0.0 to +12.0 dB</td><td>Make-up gain on the wet path, after the delay and before the mix. Pull Input back for headroom, then push the repeats back up here. At 0 dB (the default) the repeats are exactly as they are without it. Parameter only: it has no pot.</td></tr></table></div>
   </section>
 
   <section id="time">
     <h2>Time and tempo</h2>
     <h3>Time: a division of the tempo</h3>
-    <p><b>Time</b> is a stepped parameter of <b>25 musical divisions</b>, from a 1/32 up to four bars,
-    including septuplets, quintuplets, 5/16, 7/16, 5/8, 7/8, one and a half bars and three
-    bars. The default is 1/4. The delay time is the step multiplied by the length of a beat.</p>
+    <p><b>Time</b> is a stepped parameter of <b>25 musical divisions</b>, from a 1/32 up to four bars, including septuplets, quintuplets, 5/16, 7/16, 5/8, 7/8, one and a half bars and three bars. The default is 1/4. The delay time is the step multiplied by the length of a beat.</p>
     <h3>Where the tempo comes from</h3>
-    <p>Choose a bus for <b>Clock input</b> (on the Clock page) and Wake sets the tempo from the spacing of
-    the pulses, a clock or a gate going up through about 2&nbsp;V. <b>Clock PPQN</b> says how many pulses
-    make a beat (1, 2, 4 or 24, default 4). With <b>Clock input</b> set to None, the <b>Tempo</b>
-    parameter sets it, from 20 to 300 BPM (default 120). If a clock stops for four seconds, Wake falls
-    back to Tempo. A clock with jitter in it makes the delay time wobble a little: that is the clock.</p>
-    <p>Wake can also follow <b>MIDI clock</b>. Turn <b>MIDI clock</b> On (Clock page) and Wake takes its
-    tempo from the NT's MIDI clock, at the standard 24 ticks per beat, whether it comes from an external
-    source or from an algorithm on the NT that sends MIDI clock. MIDI stop hands the tempo back, and so
-    does four seconds without a tick. When MIDI clock is On and ticking it wins; otherwise the Clock input
-    bus is used, and otherwise the Tempo parameter.</p>
+    <p>The tempo comes from the first of these that is available:</p>
+    <ol><li><b>MIDI clock</b>, when the <b>MIDI clock</b> parameter (Clock page) is On and the NT is sending clock. Wake follows the standard 24 ticks per beat, whether it comes from an external source or from an algorithm on the NT that sends MIDI clock. MIDI stop hands the tempo back, and so does four seconds without a tick.</li><li>The <b>Clock input</b> bus: choose a bus and Wake sets the tempo from the spacing of the pulses, a clock or a gate going up through about 2 V. <b>Clock PPQN</b> says how many pulses make a beat (1, 2, 4 or 24, default 4). If the pulses stop for four seconds, Wake falls back.</li><li>The <b>Tempo</b> parameter, from 20 to 300 BPM (default 120).</li></ol>
+    <p>A clock with jitter in it makes the delay time wobble a little: that is the clock.</p>
     <h3>Long steps fold down</h3>
-    <p>A step longer than the Max time <b>halves until it fits</b>, so it stays on the beat grid.
-    At the default 10 seconds, four bars at 60 BPM would be 16 seconds, so it plays as 8.</p>
+    <p>A step longer than the Max time <b>halves until it fits</b>, so it stays on the beat grid. At the default 10 seconds, four bars at 60 BPM would be 16 seconds, so it plays as 8.</p>
     <h3>Moving Time: tape glide or crossfade</h3>
-    <p>By default, change <b>Time</b> while repeats are sounding and they glide to the new delay like tape,
-    rather than cutting. A small step is a quick swoop. A big jump takes a few seconds and
-    bends further: shortening can lift the pitch by up to a fifth, and lengthening can drop it
-    by up to an octave while the delay travels. Drift works on the same glide.</p>
-    <p>If you would rather the pitch never moved, set <b>Time change</b> to <b>Crossfade</b>. A change
-    then jumps to the new delay and the old repeats fade into the new ones over a tenth of a second:
-    no bend, no click.</p>
+    <p>By default, change <b>Time</b> while repeats are sounding and they glide to the new delay like tape, rather than cutting. A small step is a quick swoop. A big jump takes a few seconds and bends further: shortening can lift the pitch by up to a fifth, and lengthening can drop it by up to an octave while the delay travels. Drift works on the same glide.</p>
+    <p>If you would rather the pitch never moved, set <b>Time change</b> to <b>Crossfade</b>. A change then jumps to the new delay and the old repeats fade into the new ones over a tenth of a second: no bend, no click.</p>
     <div class="steps"><div class="tablewrap"><table><tr><th>#</th><th>Step</th><th>Beats</th><th>At 120 BPM</th></tr><tr><td>1</td><td>1/32</td><td>1/8</td><td>62.5 ms</td></tr><tr><td>2</td><td>1/16 septuplet</td><td>1/7</td><td>71.4 ms</td></tr><tr><td>3</td><td>1/16 triplet</td><td>1/6</td><td>83.3 ms</td></tr><tr><td>4</td><td>1/16 quintuplet</td><td>1/5</td><td>100.0 ms</td></tr><tr><td>5</td><td>1/16</td><td>1/4</td><td>125.0 ms</td></tr><tr><td>6</td><td>1/8 triplet</td><td>1/3</td><td>166.7 ms</td></tr><tr><td>7</td><td>dotted 1/16</td><td>3/8</td><td>187.5 ms</td></tr><tr><td>8</td><td>1/8 quintuplet</td><td>2/5</td><td>200.0 ms</td></tr><tr><td>9</td><td>1/8</td><td>1/2</td><td>250.0 ms</td></tr><tr><td>10</td><td>1/4 triplet</td><td>2/3</td><td>333.3 ms</td></tr><tr><td>11</td><td>dotted 1/8</td><td>3/4</td><td>375.0 ms</td></tr><tr><td>12</td><td>1/4 (default)</td><td>1</td><td>500.0 ms</td></tr><tr><td>13</td><td>5/16</td><td>5/4</td><td>625.0 ms</td></tr></table></div><div class="tablewrap"><table><tr><th>#</th><th>Step</th><th>Beats</th><th>At 120 BPM</th></tr><tr><td>14</td><td>1/2 triplet</td><td>4/3</td><td>666.7 ms</td></tr><tr><td>15</td><td>dotted 1/4</td><td>3/2</td><td>750.0 ms</td></tr><tr><td>16</td><td>7/16</td><td>7/4</td><td>875.0 ms</td></tr><tr><td>17</td><td>1/2</td><td>2</td><td>1.00 s</td></tr><tr><td>18</td><td>5/8</td><td>5/2</td><td>1.25 s</td></tr><tr><td>19</td><td>dotted 1/2</td><td>3</td><td>1.50 s</td></tr><tr><td>20</td><td>7/8</td><td>7/2</td><td>1.75 s</td></tr><tr><td>21</td><td>1 bar</td><td>4</td><td>2.00 s</td></tr><tr><td>22</td><td>1.5 bars</td><td>6</td><td>3.00 s</td></tr><tr><td>23</td><td>2 bars</td><td>8</td><td>4.00 s</td></tr><tr><td>24</td><td>3 bars</td><td>12</td><td>6.00 s</td></tr><tr><td>25</td><td>4 bars</td><td>16</td><td>8.00 s</td></tr></table></div></div>
-    <p style="margin-top:14px">Times shown are at 120 BPM, before any fold-down.</p>
+    <p>Times shown are at 120 BPM, before any fold-down.</p>
   </section>
 
-  <section id="more">
-    <h2>The other controls</h2>
-    <div class="tablewrap"><table>
-      <tr><th>Control</th><th>Range</th><th>What it does</th></tr>
-      <tr><td>Reverse</td><td>0–100%</td><td>How many repeats are heard backwards. Each repeat is chosen at random, so 50% is a mix of forward and backward. It is heard at the output only: the feedback loop always runs forward. A reversed repeat is the slice just recorded, played backwards, so it arrives one delay time late. It only works while the delay is at most half the Max time; beyond that, repeats stay forward.</td></tr>
-      <tr><td>Tone</td><td>0–100%</td><td>How bright each repeat stays: left for dark, right for open. A low-pass inside the loop, applied again on every pass, so the tail gets duller as it trails. 100% leaves the top open (about 16 kHz), the default 70% is about 7 kHz, and 0% is about 1 kHz.</td></tr>
-      <tr><td>Input</td><td>0–100%</td><td>Level into the delay. 50% (the default) is unity and 100% is double. The dry signal is never touched, so Input only changes how loud the repeats are.</td></tr>
-      <tr><td>Mix</td><td>0–100%</td><td>Equal-power dry/wet. 100% is the classic send-return wash.</td></tr>
-      <tr><td>Becalm</td><td>Off / On</td><td>A becalmed ship stops dead. The current repeats hold and loop, and new input is shut out. It eases in over about a tenth of a second without a click, and the held loop is an exact copy of itself, so it neither decays nor gets noisier, however long you hold it. While held, Drift still moves the frozen loop and turning it back down returns the loop exactly as it was. Time stays where it was, and Mix and Wet level still work. Push the left pot, set it from the parameter list, or map a gate to it.</td></tr>
-      <tr><td>Clear</td><td>trigger</td><td>Empties the repeats. The wet signal fades out over a few milliseconds, the delay forgets what it holds, and the wet comes back. The dry signal is never touched, and nothing is left to return later, even if you lengthen Time. It also empties a becalmed loop. Push the right pot, set it to Clear from the parameter list, or map a gate to it: a rising edge clears.</td></tr>
-      <tr><td>Wet level</td><td>0 to +12 dB</td><td>Make-up gain on the wet path, after the delay and before the mix. Pull Input back for headroom, then push the repeats back up here. At 0 dB (the default) the repeats are exactly as they are without it. Parameter only: it has no pot.</td></tr>
-    </table></div>
-  </section>
-
-  <section id="params">
-    <h2>All parameters</h2>
-    <p>On the Params screen, Wake has three pages. Every parameter can be mapped to CV, MIDI or I2C in the
-    usual way.</p>
-    <div class="tablewrap"><table class="wide">
-      <tr><th>Page</th><th>Parameter</th><th>Range</th><th>Default</th></tr>
-      <tr><td>Wake</td><td>Time</td><td>25 steps</td><td>1/4</td></tr>
-      <tr><td>Wake</td><td>Distance</td><td>0–100.0%</td><td>50.0%</td></tr>
-      <tr><td>Wake</td><td>Chop</td><td>0–100.0%</td><td>0%</td></tr>
-      <tr><td>Wake</td><td>Drift</td><td>0–100.0%</td><td>0%</td></tr>
-      <tr><td>Wake</td><td>Reverse</td><td>0–100.0%</td><td>0%</td></tr>
-      <tr><td>Wake</td><td>Tone</td><td>0–100.0%</td><td>70.0%</td></tr>
-      <tr><td>Wake</td><td>Mix</td><td>0–100%</td><td>50%</td></tr>
-      <tr><td>Wake</td><td>Input</td><td>0–100%</td><td>50%</td></tr>
-      <tr><td>Wake</td><td>Becalm</td><td>Off / On</td><td>Off</td></tr>
-      <tr><td>Wake</td><td>Clear</td><td>- / Clear</td><td>-</td></tr>
-      <tr><td>Wake</td><td>Wet level</td><td>0–12.0 dB</td><td>0 dB</td></tr>
-      <tr><td>Wake</td><td>Time change</td><td>Tape glide / Crossfade</td><td>Tape glide</td></tr>
-      <tr><td>Clock</td><td>Tempo</td><td>20–300 BPM</td><td>120</td></tr>
-      <tr><td>Clock</td><td>Clock input</td><td>None, or a bus</td><td>None</td></tr>
-      <tr><td>Clock</td><td>Clock PPQN</td><td>1 / 2 / 4 / 24</td><td>4</td></tr>
-      <tr><td>Clock</td><td>MIDI clock</td><td>Off / On</td><td>Off</td></tr>
-      <tr><td>Routing</td><td>Left input, Right input</td><td>bus</td><td>1, None</td></tr>
-      <tr><td>Routing</td><td>Left output, Right output (and modes)</td><td>bus, Add / Replace</td><td>13, 14, Replace</td></tr>
-    </table></div>
-  </section>
-
-  <section id="routing">
-    <h2>Routing</h2>
-    <p>Wake is stereo. It expects ordinary Eurorack audio, about ±5&nbsp;V at the peaks, and puts out the
-    same level. Set <b>Right input</b> to None and the left input feeds both sides, so a mono source gives
-    a stereo trail. Each output has an <b>Add</b> or <b>Replace</b> mode, as on any NT algorithm: Replace
-    (the default) writes the mix to the bus, Add sums it onto what is already there.</p>
+  <section id="nt">
+    <h2>On the disting NT</h2>
+    <h3>Installing</h3>
+    <p>Wake needs <a href="https://www.expert-sleepers.co.uk/distingNTfirmwareupdates.html">disting NT firmware 1.19 or newer</a>.</p>
+    <ol><li>Download <code>wake-plugin.zip</code> and unzip it onto the root of the MicroSD card. It puts <code>wake.o</code> in <code>programs/plug-ins/ormermodular/</code>.</li><li>Restart the module.</li><li>Add an algorithm and choose <b>Wake</b> (tagged Effect / Delay).</li></ol>
+    <p>When you add Wake it asks for one thing, the <b>Max time</b>: how many seconds of delay to reserve in memory, from 5 to 30 (default 10). It cannot be changed afterwards without re-adding the algorithm, and longer takes more memory: about 192 KB per second at 48 kHz, so 30 seconds is about 5.8 MB. The NT has 16 MB in all, shared with everything else in the preset, and it will not add an algorithm if there isn't enough memory left. If that happens, choose a shorter Max time.</p>
+    <h3>The pots: three pages</h3>
+    <p>The three pots always do exactly three things, and which three depends on the page. <b>Pushing the centre pot steps to the next page</b>; the label strip along the bottom of the screen always names what the pots do right now, with a level bar for each, and the three squares at the bottom left show which page you are on.</p>
+    <div class="pages"><div class="pagecard"><div class="pagehead"><span class="pageno">PAGE 1</span><span class="pagename">The macros</span><span class="pagewhat">where Wake lives: the trail in three moves</span></div><div class="potline"><div class="potviz"><span class="potdot"></span><b>DISTANCE</b><small>how long it lasts, how wide it spreads</small></div><div class="potviz"><span class="potdot push"></span><b>CHOP</b><small>repeats that stutter</small><span class="pushhint">push → page 2</span></div><div class="potviz"><span class="potdot"></span><b>DRIFT</b><small>how far the pitch wanders</small></div></div></div><div class="pagearrow">push the centre pot</div><div class="pagecard"><div class="pagehead"><span class="pageno">PAGE 2</span><span class="pagename">Time, reverse and tone</span><span class="pagewhat">shaping each repeat</span></div><div class="potline"><div class="potviz"><span class="potdot"></span><b>TIME</b><small>25 divisions of the tempo</small></div><div class="potviz"><span class="potdot push"></span><b>REVERSE</b><small>repeats played backwards</small><span class="pushhint">push → page 3</span></div><div class="potviz"><span class="potdot"></span><b>TONE</b><small>dark to open</small></div></div></div><div class="pagearrow">push the centre pot</div><div class="pagecard"><div class="pagehead"><span class="pageno">PAGE 3</span><span class="pagename">The levels and tempo</span><span class="pagewhat">set when patching, then leave</span></div><div class="potline"><div class="potviz"><span class="potdot"></span><b>MIX</b><small>equal-power dry/wet</small></div><div class="potviz"><span class="potdot push"></span><b>INPUT</b><small>level into the delay</small><span class="pushhint">push → page 1</span></div><div class="potviz"><span class="potdot"></span><b>TEMPO</b><small>BPM when no clock is patched</small></div></div></div></div>
+    <p class="note"><b>Nothing ever jumps:</b> after a page change, each pot stays silent until you turn it to the value it now owns (the NT's soft takeover). Flip pages freely mid-performance. <b>Wet level</b> and the clock, time-change and routing settings have no pot: set them from the parameter list.</p>
+    <h3>Becalm and Clear on the pot pushes</h3>
+    <p>Two quick performance tools sit on the pot pushes, named along the top of the screen:</p>
+    <ul><li><b>Push the left pot: Becalm</b>, on and off. The label at the top left reads BECALM when it is off, and bright BECALM ON while it holds.</li><li><b>Push the right pot: Clear.</b> It is momentary: the repeats empty, and the CLEAR label at the top right lights for a moment.</li></ul>
+    <p>Both are also ordinary parameters on the Wake page, so you can set them from the parameter list or map a gate, button or sequencer output to them in Mappings.</p>
+    <p class="note"><b>Encoders and the parameter list:</b> while Wake's screen is showing, both encoders (turning them) and the right encoder push do nothing, so you can never change a hidden parameter by accident. Press <b>button 2</b> to switch to the NT's parameter list, where they work as usual. The ways out are always the NT's own: buttons 1 to 4 and the left encoder push (back to the overview).</p>
+    <h3>Automation and CV</h3>
+    <p>Every parameter, the three macros included, is a normal NT parameter, so all of it can be mapped to CV, MIDI or i2c and automated through the module's own <b>Mappings</b> system, exactly like a built-in algorithm. The macros run at 0.1% resolution and every audible target glides inside the engine, so mapped steps and fast automation stay clean. Time moves like tape (or crossfades) when it changes, and Chop and Reverse change how many repeats stutter or play backwards, so you hear more or fewer of them.</p>
+    <h3>All parameters</h3>
+    <p>Wake has three pages in the NT's parameter list: Wake, Clock and Routing.</p>
+    <div class="tablewrap wide params"><table><tr><th>Parameter</th><th>Range</th><th>Default</th><th>Page</th><th>What it does</th></tr><tr><td>Time</td><td>25 steps</td><td>1/4</td><td>Wake</td><td>The delay time, as a division of the tempo.</td></tr><tr><td>Distance</td><td>0 to 100.0%</td><td>50.0%</td><td>Wake</td><td>How long the trail lasts, and how wide it spreads.</td></tr><tr><td>Chop</td><td>0 to 100.0%</td><td>0%</td><td>Wake</td><td>How many repeats stutter.</td></tr><tr><td>Drift</td><td>0 to 100.0%</td><td>0%</td><td>Wake</td><td>How far the pitch wanders.</td></tr><tr><td>Reverse</td><td>0 to 100.0%</td><td>0%</td><td>Wake</td><td>How many repeats play backwards.</td></tr><tr><td>Tone</td><td>0 to 100.0%</td><td>70.0%</td><td>Wake</td><td>How bright each repeat stays.</td></tr><tr><td>Mix</td><td>0 to 100%</td><td>50%</td><td>Wake</td><td>Dry/wet.</td></tr><tr><td>Input</td><td>0 to 100%</td><td>50%</td><td>Wake</td><td>Level into the delay.</td></tr><tr><td>Becalm</td><td>Off / On</td><td>Off</td><td>Wake</td><td>Hold the repeats. Left pot push.</td></tr><tr><td>Clear</td><td>- / Clear</td><td>-</td><td>Wake</td><td>Empty the repeats (a rising edge). Right pot push.</td></tr><tr><td>Wet level</td><td>0.0 to 12.0 dB</td><td>0 dB</td><td>Wake</td><td>Make-up gain on the repeats.</td></tr><tr><td>Time change</td><td>Tape glide / Crossfade</td><td>Tape glide</td><td>Wake</td><td>How Time moves.</td></tr><tr><td>Tempo</td><td>20 to 300 BPM</td><td>120</td><td>Clock</td><td>Used when no clock is available.</td></tr><tr><td>Clock input</td><td>a bus, or None</td><td>None</td><td>Clock</td><td>A pulse input that sets the tempo.</td></tr><tr><td>Clock PPQN</td><td>1 / 2 / 4 / 24</td><td>4</td><td>Clock</td><td>Pulses per beat on the Clock input.</td></tr><tr><td>MIDI clock</td><td>Off / On</td><td>Off</td><td>Clock</td><td>Follow the NT's MIDI clock (24 per beat).</td></tr><tr><td>Left input</td><td>a bus</td><td>Input 1</td><td>Routing</td><td>Left audio in.</td></tr><tr><td>Right input</td><td>a bus, or None</td><td>None</td><td>Routing</td><td>Right audio in. None: left feeds both sides.</td></tr><tr><td>Left output, Right output</td><td>a bus</td><td>Output 1, Output 2</td><td>Routing</td><td>Where the stereo output goes.</td></tr><tr><td>Left output mode, Right output mode</td><td>Add / Replace</td><td>Replace</td><td>Routing</td><td>Replace writes the mix to the bus, Add sums it onto what is there.</td></tr></table></div>
+    <h3>Routing</h3>
+    <div class="tablewrap wide"><table><tr><th>Signal</th><th>Default</th><th>Notes</th></tr><tr><td>Left input</td><td>Input 1</td><td></td></tr><tr><td>Right input</td><td>None</td><td>Left feeds both sides, so a mono source gives a stereo trail. Set it to a bus for a true stereo input.</td></tr><tr><td>Left output</td><td>Output 1</td><td>Mode defaults to <b>Replace</b>: Mix already carries your dry signal. Use <b>Add</b> only to sum onto a busy bus, with Mix at 100% wet.</td></tr><tr><td>Right output</td><td>Output 2</td><td>As the left output.</td></tr></table></div>
   </section>
 
   <section id="trouble">
     <h2>Troubleshooting</h2>
-    <dl class="qa">
-      <dt>I hear nothing.</dt>
-      <dd>Check the Routing page: the input bus has to carry your audio and the outputs have to go where
-      you are listening. With Mix at zero you hear only the dry signal.</dd>
-      <dt>I hear the dry signal but no repeats.</dt>
-      <dd>Check Mix is above zero, Input isn't at zero, and Becalm isn't on with nothing in the loop
-      (becalm shuts new input out). A very low Distance gives just a few short repeats.</dd>
-      <dt>Reverse does nothing.</dt>
-      <dd>Reverse only works while the delay is at most half the Max time. Choose a shorter Time step,
-      a faster tempo, or re-add Wake with a longer Max time.</dd>
-      <dt>The pitch swoops when I change Time.</dt>
-      <dd>That is the tape glide. Change it slowly, or set <b>Time change</b> to Crossfade for no pitch
-      change at all.</dd>
-      <dt>The Tempo pot does nothing.</dt>
-      <dd>A clock is set on Clock input, or MIDI clock is On and ticking, and it takes over. Set Clock input to None, or stop the clock for
-      four seconds. If the tempo is a multiple or fraction of what you expect, check Clock PPQN.</dd>
-      <dt>Where are Becalm and Clear?</dt>
-      <dd>On the pot pushes: left pot push is Becalm, right pot push is Clear. They are also on the Wake page
-      of the parameter list (button 2), and you can map a gate to either.</dd>
-      <dt>The encoders do nothing on Wake's screen.</dt>
-      <dd>On purpose: on this screen they would edit a parameter hidden behind the picture. Press button 2
-      (Params) for the parameter list, where they work as usual.</dd>
-      <dt>The trail at full Distance won't die.</dt>
-      <dd>By design: in the last 5% the feedback holds. Lower Distance, or set Clear.</dd>
-    </dl>
+    <dl class="qa"><dt>Wake doesn't appear in the NT's algorithm list.</dt><dd>Update the module's firmware (Wake needs 1.19 or newer) and check that <code>wake.o</code> really is inside <code>programs/plug-ins/ormermodular/</code>.</dd><dt>I hear nothing.</dt><dd>Check the Routing page: the input bus has to carry your audio and the outputs have to go where you are listening. With Mix at zero you hear only the dry signal.</dd><dt>I hear the dry signal but no repeats.</dt><dd>Check Mix is above zero, Input isn't at zero, and Becalm isn't on with nothing in the loop (becalm shuts new input out). A very low Distance gives just a few short repeats.</dd><dt>Reverse does nothing.</dt><dd>Reverse only works while the delay is at most half the Max time. Choose a shorter Time step, a faster tempo, or re-add Wake with a longer Max time.</dd><dt>The pitch swoops when I change Time.</dt><dd>That is the tape glide. Change it slowly, or set <b>Time change</b> to Crossfade for no pitch change at all.</dd><dt>The Tempo pot does nothing.</dt><dd>A clock is set on Clock input, or MIDI clock is On and ticking, and it takes over. Set Clock input to None and MIDI clock to Off, or stop the clock for four seconds. If the tempo is a multiple or fraction of what you expect, check Clock PPQN.</dd><dt>The encoders do nothing on Wake's screen.</dt><dd>On purpose: on this screen they would edit a parameter hidden behind the picture. Press button 2 (Params) for the parameter list, where they work as usual.</dd><dt>Where are Becalm and Clear?</dt><dd>On the pot pushes: left pot push is Becalm, right pot push is Clear. They are also on the Wake page of the parameter list, and you can map a gate to either.</dd><dt>Wake won't add, or the NT says it is out of memory.</dt><dd>Choose a shorter Max time. Each second of delay takes about 192 KB.</dd><dt>The trail at full Distance won't die.</dt><dd>By design: in the last 5% the feedback holds. Lower Distance, or push the right pot to Clear.</dd></dl>
   </section>
 
   <section id="specs">
     <h2>Specifications</h2>
-    <div class="tablewrap"><table class="wide">
-      <tr><td>Format</td><td>disting NT plug-in</td><td>Stereo in, stereo out. Free.</td></tr>
-      <tr><td>Engine</td><td>stereo delay with feedback</td><td>Interpolated delay line; leveller and low-pass in the loop; per-repeat stutter; reversed output tap; Drift on the delay time (sine, then random wander and tape)</td></tr>
-      <tr><td>Time</td><td>25 steps</td><td>1/32 to 4 bars, from a clock or 20–300 BPM; steps longer than the Max time halve until they fit</td></tr>
-      <tr><td>Max time</td><td>5 – 30 s</td><td>chosen when the algorithm is added, default 10 s; stored as 16-bit stereo, about 192 KB per second at 48 kHz</td></tr>
-      <tr><td>Audio</td><td>about ±5 V</td><td>in and out; right input optional (None: left feeds both)</td></tr>
-      <tr><td>Firmware</td><td>v1.19 or later</td><td>for pot takeover after a bank change</td></tr>
-    </table></div>
-    <p style="margin-top:14px">Wake's engine is original. It uses no third-party DSP. Wake is closed-source and
-    proprietary.</p>
+    <div class="tablewrap"><table class="wide"><tr><td>Format</td><td>disting NT algorithm, free, closed source</td></tr><tr><td>Version</td><td>1.0.0</td></tr><tr><td>Firmware</td><td>1.19 or newer (pot takeover after a page change)</td></tr><tr><td>Engine</td><td>stereo delay with feedback; leveller and low-pass in the loop; per-repeat stutter; reversed output tap; Drift on the delay time (sine, then random wander and tape)</td></tr><tr><td>Time</td><td>25 steps, 1/32 to 4 bars, from MIDI clock, a clock input or 20 to 300 BPM; steps longer than the Max time halve until they fit</td></tr><tr><td>Max time</td><td>5 to 30 s, chosen when the algorithm is added (default 10 s); stored as 16-bit stereo, about 192 KB per second at 48 kHz</td></tr><tr><td>Audio</td><td>about ±5 V, in and out; right input optional (None: left feeds both sides)</td></tr><tr><td>Parameters</td><td>22, on three pages: Wake, Clock and Routing</td></tr><tr><td>Tag</td><td>Effect, Delay</td></tr></table></div>
+    <p style="margin-top:14px">Wake's engine is original. It uses no third-party DSP. Wake is closed-source and proprietary.</p>
   </section>
 
   <footer>
@@ -335,3 +229,247 @@
   </footer>
 
 </div>
+<script>
+// The Wake disting NT display for the manual: a port of draw() in nt/wake_nt.cpp onto a 256x64
+// canvas, so the picture is the plug-in's own drawing code (a boat at the top, its wake opening out
+// behind it), driven by the three page-1 pots as sliders. Keep it in step with draw():
+// tools/check-nt-screen-port.sh renders scenes both ways and fails on a single differing pixel.
+// The plug-in's own font is not available here: the labels use plain 3x5 letters, the same as
+// the check's reference. Floats are rounded to 32 bits (Math.fround) wherever draw() uses a float.
+(function () {
+  var cv = document.getElementById('hero');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var f = Math.fround;
+
+  // ---- canvas helpers (same shapes as NT_drawShapeI / NT_drawText) ------------------------
+  function shade(c) {
+    var a = c / 15; a = a * (0.55 + 0.45 * a);
+    return 'rgb(' + Math.round(8 + a * 225) + ',' + Math.round(10 + a * 235) + ',' + Math.round(14 + a * 241) + ')';
+  }
+  function P(x, y, c) { if (x < 0 || x > 255 || y < 0 || y > 63) return; ctx.fillStyle = shade(Math.max(0, Math.min(15, c))); ctx.fillRect(x, y, 1, 1); }
+  function rect(x0, y0, x1, y1, c) { for (var y = y0; y <= y1; y++) for (var x = x0; x <= x1; x++) P(x, y, c); }
+  function box(x0, y0, x1, y1, c) { for (var x = x0; x <= x1; x++) { P(x, y0, c); P(x, y1, c); } for (var y = y0; y <= y1; y++) { P(x0, y, c); P(x1, y, c); } }
+  function line(x0, y0, x1, y1, c) {
+    var dx = x1 - x0, dy = y1 - y0, n = Math.max(Math.abs(dx), Math.abs(dy));
+    if (!n) { P(x0, y0, c); return; }
+    for (var i = 0; i <= n; i++) P(x0 + Math.trunc(dx * i / n), y0 + Math.trunc(dy * i / n), c);
+  }
+  var G = {
+    'A': '010101111101101', 'B': '110101110101110', 'C': '011100100100011', 'D': '110101101101110',
+    'E': '111100110100111', 'F': '111100110100100', 'H': '101101111101101', 'I': '111010010010111',
+    'L': '100100100100111', 'M': '101111111101101', 'N': '110101101101101', 'O': '010101101101010',
+    'P': '110101110100100', 'R': '110101110101101', 'S': '011100010001110', 'T': '111010010010010',
+    'U': '101101101101111', 'V': '101101101101010', 'X': '101101010101101'
+  };
+  // y is the baseline; align 'l' | 'r' | 'c'
+  function text(x, y, s, c, align) {
+    var w = s.length * 4 - 1;
+    var x0 = align === 'c' ? x - Math.trunc(w / 2) : (align === 'r' ? x - w : x), yT = y - 4;
+    for (var i = 0; i < s.length; i++) {
+      var g = G[s[i]]; if (!g) continue;
+      for (var r = 0; r < 5; r++) for (var k = 0; k < 3; k++)
+        if (g[r * 3 + k] === '1') P(x0 + i * 4 + k, yT + r, c);
+    }
+  }
+  function idiv(a, b) { return Math.trunc(a / b); }
+  function clampi(x, lo, hi) { return x < lo ? lo : (x > hi ? hi : x); }
+  function wline(x0, y0, x1, y1, c) {
+    if (c < 1) return;
+    if (c > 15) c = 15;
+    line(clampi(x0, 0, 255), clampi(y0, 0, 63), clampi(x1, 0, 255), clampi(y1, 0, 63), c);
+  }
+
+  // ---- the plug-in's scene helpers ---------------------------------------------------------
+  function sceneHash(a, b, c) {
+    var h = (Math.imul(a >>> 0, 0x9E3779B1) ^ Math.imul(b >>> 0, 0x85EBCA77) ^ Math.imul(c >>> 0, 0xC2B2AE3D)) >>> 0;
+    h = (h ^ (h >>> 15)) >>> 0;
+    h = Math.imul(h, 0x846CA68B) >>> 0;
+    h = (h ^ (h >>> 16)) >>> 0;
+    return h;
+  }
+  function sweepWave(ph) {
+    var q = f(f(ph * 2) - 1), aq = q < 0 ? f(-q) : q;
+    return f(f(f(4 * q) * f(1 - aq)));
+  }
+  var kBoatX = 128, kBoatY = 12, kSeaBottom = 52;
+
+  // ---- state: what draw() reads from the algorithm instance --------------------------------
+  // v: the raw parameter values (the macros 0-1000 shown 0.0-100.0%), bank: the pot page,
+  // wet: the delay's own output level (the engine's wetLevel()), tick/frozen: the animation clocks
+  var S = {
+    dist: 500, chop: 0, drift: 0, rev: 0, tone: 700, time: 11, mix: 50, input: 50, tempo: 120,
+    becalm: false, bank: 0, wet: 0, tick: 0, frozen: 0, flash: 0
+  };
+  var NAMES = [['DISTANCE', 'CHOP', 'DRIFT'], ['TIME', 'REVERSE', 'TONE'], ['MIX', 'INPUT', 'TEMPO']];
+  // which value each pot shows, and its parameter range (min, max)
+  function potValue(bank, i) {
+    switch (bank * 3 + i) {
+      case 0: return [S.dist, 0, 1000];  case 1: return [S.chop, 0, 1000]; case 2: return [S.drift, 0, 1000];
+      case 3: return [S.time, 0, 24];    case 4: return [S.rev, 0, 1000];  case 5: return [S.tone, 0, 1000];
+      case 6: return [S.mix, 0, 100];    case 7: return [S.input, 0, 100]; default: return [S.tempo, 20, 300];
+    }
+  }
+
+  // ---- draw(), line for line ---------------------------------------------------------------
+  function draw() {
+    ctx.fillStyle = shade(0); ctx.fillRect(0, 0, 256, 64);
+    S.tick++;
+    var t = S.tick;
+    var K001 = f(0.001);
+    var dist = f(f(S.dist) * K001), chop = f(f(S.chop) * K001), drift = f(f(S.drift) * K001), rev = f(f(S.rev) * K001);
+    var bright = f(f(S.tone) * K001);
+    var wet = f(f(S.wet) * 4); if (wet > 1) wet = 1;
+    var becalm = S.becalm;
+
+    var fb = f(f(0.30) + f(f(0.68) * dist));
+    if (dist > f(0.95)) fb = f(f(0.98) + f(f(0.4) * f(dist - f(0.95))));
+    if (fb > 1) fb = 1;
+
+    var tt = becalm ? S.frozen : t;
+    if (!becalm) S.frozen = t;
+
+    // stars and the moon
+    var starC = 3 + Math.trunc(f(bright * 5));
+    for (var s = 0; s < 16; s++) {
+      var r = sceneHash(s, 0x57A2, 0);
+      var x = r % 256, y = 1 + (((r >>> 9) >>> 0) % 9);
+      if (x > 92 && x < 164) continue;
+      var tw = (r >>> 17) & 31;
+      var c = starC - (((((tt >>> 4) + tw) & 7) < 2) ? 2 : 0);
+      if (c > 0) P(x, y, c);
+    }
+    rect(52, 4, 55, 7, 5 + Math.trunc(f(bright * 3)));
+    P(51, 5, 3); P(56, 5, 3);	// kNT_point draws only its first point
+
+    // the sea stipple
+    var slow = Math.trunc(((tt * (1 + Math.trunc(f(6 * drift)))) >>> 0) / 16);
+    for (var yy = 14; yy < kSeaBottom; yy += 3)
+      for (var xx = 0; xx < 256; xx += 4) {
+        var rr = sceneHash(xx + (slow % 256), yy, Math.trunc(slow / 256));
+        if ((rr & 7) === 0) P(xx & 255, yy, 1 + ((rr >>> 8) & 1));
+      }
+
+    // the boat
+    var rock = Math.trunc(f(sweepWave(f(((tt * 2) & 63) / 64)) * f(f(0.6) + f(f(2.4) * drift))));
+    var bx = kBoatX, by = kBoatY + (becalm ? 0 : idiv(rock, 2));
+    rect(bx - 6, by, bx + 6, by + 2, 11);
+    line(bx - 7, by - 1, bx + 7, by - 1, 8);
+    line(bx - 1, by - 9, bx - 1, by - 2, 9);
+    line(bx, by - 8, bx + 5, by - 2, 7);
+    line(bx, by - 2, bx + 5, by - 2, 7);
+    var lamp = 9 + Math.trunc(f(wet * 6));
+    P(bx - 6, by - 2, lamp > 15 ? 15 : lamp);
+    if (wet > f(0.2)) box(bx - 8, by - 4, bx - 4, by, 2 + Math.trunc(f(wet * 3)));
+
+    // the wake: a chevron per repeat
+    var spacing = 4 + idiv(S.time, 4);
+    var flow = becalm ? 0 : f((tt & 255) / 256);
+    var amp = 1;
+    for (var i = 0; i < 7; i++) {
+      var yw = by + 6 + i * spacing + Math.trunc(f(flow * spacing));
+      if (yw > kSeaBottom) break;
+      var cw = 3 + Math.trunc(f(f(amp * 9) + f(wet * 3)));
+      var widen = f(1 + f(f(0.5) * dist));
+      var w = Math.trunc(f(f(f(10) + f(f(yw - by) * 3)) * widen));
+      var wob = f(sweepWave(f(((tt * 3 + i * 23) & 127) / 128)) * f(3 * drift));
+      var wobI = Math.trunc(wob);
+      var tipDy = 3 + idiv(w, 6);
+      var flipped = rev > f(0.02) && (sceneHash(i, 0xBEEF, tt >>> 7) & 255) < Math.trunc(f(rev * 256));
+      var pieces = 1 + Math.trunc(f(chop * 7));
+      for (var side = -1; side <= 1; side += 2) {
+        var wsd = side > 0 ? w + Math.trunc(f(f(w * dist) * f(0.1))) : w;
+        var yApex = flipped ? yw + tipDy : yw;
+        var yEnd = flipped ? yw : yw + tipDy;
+        if (pieces <= 1) { wline(bx, yApex, bx + side * wsd, yEnd + wobI, cw); continue; }
+        for (var k = 0; k < pieces; k++) {
+          var h = sceneHash(i, k, ((tt >>> 6) + (side + 1)) >>> 0);
+          if ((h & 3) === 0) continue;
+          var x0 = bx + side * idiv(wsd * k, pieces);
+          var x1 = bx + side * (idiv(wsd * (k + 1), pieces) - 1);
+          var y0 = yApex + idiv((yEnd - yApex) * k, pieces);
+          var y1 = yApex + idiv((yEnd - yApex) * (k + 1), pieces);
+          wline(x0, y0 + wobI, x1, y1 + wobI, cw);
+          if ((h & 12) === 0) wline(x0, y0 + wobI + 2, x1, y1 + wobI + 2, cw > 3 ? cw - 3 : 1);
+        }
+      }
+      amp = f(amp * fb);
+    }
+
+    // foam along the boat's own V
+    for (var sd = -1; sd <= 1; sd += 2) {
+      wline(bx + sd * 5, by + 3, bx + sd * 30, kSeaBottom, 3 + Math.trunc(f(dist * 3)));
+      wline(bx + sd * 4, by + 3, bx + sd * 18, by + 24, 5 + Math.trunc(f(wet * 4)));
+    }
+
+    // the sea line and the spray
+    line(0, kSeaBottom, 255, kSeaBottom, 2);
+    if (wet > f(0.25))
+      for (var j = 0; j < 6; j++) {
+        var q = sceneHash(j, tt >>> 3, 0x5EA1);
+        var px = clampi(bx - 70 + (q % 140), 0, 255);
+        var py = clampi(by + 10 + (((q >>> 12) >>> 0) % 38), 0, 63);
+        P(px, py, 4 + Math.trunc(f(wet * 6)));
+      }
+
+    // the three pots, named, with a level bar each; the page squares at the bottom left
+    var cx = [43, 128, 213];
+    for (var p = 0; p < 3; p++) {
+      var pv = potValue(S.bank, p);
+      rect(cx[p] - 30, 54, cx[p] + 30, 63, 0);
+      var vn = f(f(f(pv[0]) - f(pv[1])) / f(pv[2] - pv[1]));
+      line(cx[p] - 14, 56, cx[p] + 14, 56, 3);
+      var fill = Math.trunc(f(f(vn * 28) + f(0.5)));
+      if (fill > 0) line(cx[p] - 14, 56, cx[p] - 14 + fill, 56, 11);
+      line(cx[p] - 14 + fill, 55, cx[p] - 14 + fill, 57, 13);
+      text(cx[p], 63, NAMES[S.bank][p], S.bank ? 12 : 9, 'c');
+    }
+    for (var d = 0; d < 3; d++) rect(2 + d * 5, 59, 4 + d * 5, 61, d === S.bank ? 13 : 3);
+
+    // the two live tools, named along the top
+    if (becalm) text(4, 8, 'BECALM ON', 14, 'l'); else text(4, 8, 'BECALM', 5, 'l');
+    if (S.flash > 0) { text(252, 8, 'CLEAR', 14, 'r'); S.flash -= 1; } else text(252, 8, 'CLEAR', 5, 'r');
+  }
+
+  // ---- the demo: a note every few seconds, its repeats fading at the feedback ---------------
+  // (wet follows the same mapping as the display: feedback from DISTANCE, one repeat per beat)
+  var FPS = 30, now = 0, hitAt = 0;
+  function feedback() {
+    var d = S.dist * 0.001, fb = 0.30 + 0.68 * d;
+    if (d > 0.95) fb = 0.98 + 0.4 * (d - 0.95);
+    return Math.min(1, fb);
+  }
+  function step() {
+    now += 1 / FPS;
+    if (!S.becalm) {
+      var period = 4;						// a new note every four seconds
+      var ph = now % period, n = Math.floor(ph / 0.5);	// a repeat every half second
+      var target = ph < 0.1 ? 0.28 : 0.25 * Math.pow(feedback(), n) * (n < 7 ? 1 : 0);
+      if (S.dist > 960) target = 0.25 * Math.pow(0.99, n);
+      S.wet += (target - S.wet) * 0.35;
+    }
+    draw();
+  }
+
+  var sliders = document.querySelectorAll('[data-pot]');
+  function readPots() {
+    for (var i = 0; i < sliders.length; i++) {
+      var k = sliders[i].getAttribute('data-pot'), val = +sliders[i].value * 10;
+      if (k === 'dist') S.dist = val; else if (k === 'chop') S.chop = val; else if (k === 'drift') S.drift = val;
+    }
+  }
+  for (var i = 0; i < sliders.length; i++) sliders[i].addEventListener('input', readPots);
+  readPots();
+  var bec = document.getElementById('btnBecalm'), clr = document.getElementById('btnClear');
+  if (bec) bec.addEventListener('click', function () {
+    S.becalm = !S.becalm; bec.setAttribute('aria-pressed', S.becalm ? 'true' : 'false');
+  });
+  if (clr) clr.addEventListener('click', function () { S.flash = 12; S.wet = 0; });
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { for (var w = 0; w < 80; w++) step(); } else setInterval(step, 1000 / FPS);
+  window.__wakeDemo = { state: S, draw: draw, step: step };
+})();
+
+</script>
+</body>
+</html>
