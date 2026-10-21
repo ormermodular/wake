@@ -23,7 +23,7 @@ tape. **REV** turns repeats backwards, **TONE** darkens each one, **BCLM**
 On the panel, a small boat sails with its wake opening out behind it: each
 ripple is a repeat.
 
-<p align="center"><a href="https://ormermodular.github.io/wake/vcv/">VCV Rack manual</a></p>
+<p align="center"><a href="https://ormermodular.github.io/wake/vcv/">VCV Rack manual</a> · <a href="https://ormermodular.github.io/wake/nt/">disting NT manual</a></p>
 
 ## Installing
 
