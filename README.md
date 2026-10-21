@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/banner.svg" alt="Wake" width="100%"></p>
+<p align="center"><img src="docs/images/wake-banner.svg" alt="Wake by Ormer Modular" width="100%"></p>
 
 <p align="center">
   <img alt="Licence: proprietary" src="https://img.shields.io/badge/licence-proprietary-lightgrey">
