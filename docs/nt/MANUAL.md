@@ -177,8 +177,8 @@ Wake has three pages in the NT's parameter list: Wake, Clock and Routing.
 | MIDI clock | Off / On | Off | Clock | Follow the NT's MIDI clock (24 per beat). |
 | Left input | a bus | Input 1 | Routing | Left audio in. |
 | Right input | a bus, or None | None | Routing | Right audio in. None: left feeds both sides. |
-| Left output, Right output | a bus | Output 1, Output 2 | Routing | Where the stereo output goes. |
-| Left output mode, Right output mode | Add / Replace | Replace | Routing | Replace writes the mix to the bus, Add sums it onto what is there. |
+| Left output, Right output | a bus, or None | Output 1, Output 2 | Routing | Where the stereo output goes. |
+| Output mode | Add / Replace | Replace | Routing | Replace writes the mix to the bus, Add sums it onto what is there. |
 
 ### Routing
 
@@ -186,8 +186,9 @@ Wake has three pages in the NT's parameter list: Wake, Clock and Routing.
 |---|---|---|
 | Left input | Input 1 |  |
 | Right input | None | Left feeds both sides, so a mono source gives a stereo trail. Set it to a bus for a true stereo input. |
-| Left output | Output 1 | Mode defaults to **Replace**: Mix already carries your dry signal. Use **Add** only to sum onto a busy bus, with Mix at 100% wet. |
-| Right output | Output 2 | As the left output. |
+| Left output | Output 1 | None writes nothing. |
+| Right output | Output 2 | None sends both sides, summed, to the left output. |
+| Output mode | Replace | Applies to both outputs. Mix already carries your dry signal, so Replace is the natural choice. Use **Add** only to sum onto a busy bus, with Mix at 100% wet. |
 
 ## Troubleshooting
 
